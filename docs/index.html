@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EnrollFlow 選課候補模擬器</title>
+  <meta name="description" content="資料結構期末作品：用佇列、堆疊、清單、集合、字典模擬大學加退選與候補遞補。">
+  <!-- 字體：Bebas Neue 只用在大數字與英文主標；JetBrains Mono 負責其餘文字。中文自動退回系統字體。 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <!-- CheerpJ 3：在瀏覽器裡執行 Java（課程 W04 教材做法）。示範模式 (?demo) 不會用到它。 -->
+  <script src="https://cjrtnc.leaningtech.com/3.0/cj3loader.js"></script>
+</head>
+<body>
+  <!-- ===== 載入畫面：第一次開啟要下載 Java runtime，約 10–30 秒 =====
+       動畫流程（app.js 的 boot* 函式控制）：
+       逐步打出三行開機紀錄 → 進度格往前推、百分比跳動、計時器走 → 全部 OK 後出現 READY
+       → 卡片往上收起 → 主畫面各區塊依序浮現。等待期間下方輪播資料結構小知識。 -->
+  <section id="loading" class="boot">
+    <div class="boot-inner" id="boot-card">
+      <div class="boot-head">
+        <p class="micro">/BOOT · DATA STRUCTURES FINAL · GROUP 07</p>
+        <p class="micro boot-clock" id="boot-clock" aria-hidden="true">T+00:00.0</p>
+      </div>
+      <!-- 標題逐字打出、停一下、刪掉再重打，一直循環到載入完成（app.js 的 typeTitleLoop） -->
+      <h1 class="boot-title" id="boot-title" aria-label="ENROLLFLOW"><span id="boot-word" aria-hidden="true">ENROLLFLOW</span><span class="cursor" aria-hidden="true">_</span></h1>
+      <p class="boot-sub">選課候補模擬器</p>
+      <ol class="boot-steps" id="boot-steps" aria-live="polite">
+        <li data-step="1"><span class="step-text">JAVA_RUNTIME　下載 Java 執行環境</span><span class="step-time"></span></li>
+        <li data-step="2"><span class="step-text">LOAD_CLASSES　載入選課系統程式</span><span class="step-time"></span></li>
+        <li data-step="3"><span class="step-text">INIT_SYSTEM　建立課程資料</span><span class="step-time"></span></li>
+        <li data-step="4" class="step-ready" hidden><span class="step-text">READY　系統就緒</span><span class="step-time"></span></li>
+      </ol>
+      <div class="boot-progress" id="boot-progress" role="progressbar" aria-label="載入進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="boot-bar" id="boot-bar" aria-hidden="true"></div>
+        <span class="boot-pct" id="boot-pct" aria-hidden="true">000<small>%</small></span>
+      </div>
+      <!-- 平常是空的；示範模式說明、載入完成或失敗原因才會顯示在這裡 -->
+      <p id="loading-msg" class="boot-msg"></p>
+      <p class="boot-tip" id="boot-tip"></p>
+    </div>
+  </section>
+
+  <div id="app" class="app" hidden>
+    <!-- ===== 上方列（設計檔 ①）：天數、學分、下一天、復原 ===== -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-name">ENROLLFLOW</span>
+        <span class="brand-sub">/ 115-1 加退選模擬</span>
+        <span id="demo-tag" class="demo-tag" hidden>DEMO DATA · 示範資料</span>
+      </div>
+
+      <div class="meter" aria-label="加退選天數">
+        <span class="meter-label">DAY</span>
+        <span class="meter-value"><span id="day">01</span><small>/<span id="total-days">10</span></small></span>
+        <div id="day-ticks" class="ticks" aria-hidden="true"></div>
+      </div>
+
+      <div class="meter" aria-label="已選學分">
+        <span class="meter-label">學分</span>
+        <span class="meter-value"><span id="credits">0</span><small>/<span id="max-credits">16</span></small></span>
+        <div id="credit-cells" class="cells" aria-hidden="true"></div>
+      </div>
+
+      <div class="actions">
+        <button id="btn-undo" class="btn btn-ghost" type="button" title="復原上一步（pop 復原堆疊）">
+          <span class="key">U</span>復原
+        </button>
+        <button id="btn-next" class="btn btn-ink" type="button" title="推進一天，模擬同學行動">
+          下一天 <span aria-hidden="true">↗</span>
+        </button>
+        <button id="btn-new" class="btn btn-text" type="button">新局</button>
+      </div>
+    </header>
+
+    <!-- 系統訊息列：每次操作後顯示 Java 回傳的 msg；額滿時這裡會出現「排候補」按鈕 -->
+    <div id="message" class="message" role="status" aria-live="polite">
+      <span class="prompt" aria-hidden="true">SYS&gt;</span>
+      <span id="message-text">系統就緒，選一門課開始。</span>
+      <span id="message-action"></span>
+    </div>
+
+    <!-- 加退選結束後的結算列（state.finished 為 true 時顯示） -->
+    <section id="result" class="result" hidden aria-labelledby="result-title">
+      <h2 id="result-title" class="result-title">加退選結束</h2>
+      <p id="result-text" class="result-text"></p>
+      <button id="btn-again" class="btn btn-violet" type="button">再玩一次 <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <main class="grid">
+      <!-- ===== ② 課程列表 ===== -->
+      <section class="panel panel-courses" aria-labelledby="h-courses">
+        <h2 class="section-label" id="h-courses"><span class="num">/01</span>課程列表</h2>
+        <div class="filters">
+          <label class="search">
+            <span class="visually-hidden">搜尋課號或課名</span>
+            <input id="search" type="search" placeholder="搜尋課號或課名" autocomplete="off">
+          </label>
+          <div class="weekday-filter" role="group" aria-label="依星期篩選" id="weekday-filter">
+            <button type="button" data-day="0" aria-pressed="true">全部</button>
+            <button type="button" data-day="1" aria-pressed="false">一</button>
+            <button type="button" data-day="2" aria-pressed="false">二</button>
+            <button type="button" data-day="3" aria-pressed="false">三</button>
+            <button type="button" data-day="4" aria-pressed="false">四</button>
+            <button type="button" data-day="5" aria-pressed="false">五</button>
+          </div>
+          <div class="weekday-filter" role="group" aria-label="依年級篩選" id="grade-filter">
+            <button type="button" data-grade="0" aria-pressed="true">全部年級</button>
+            <button type="button" data-grade="2" aria-pressed="false">大二</button>
+            <button type="button" data-grade="3" aria-pressed="false">大三</button>
+          </div>
+        </div>
+        <ul id="course-list" class="course-list"></ul>
+        <p id="course-empty" class="empty" hidden>沒有符合條件的課程。</p>
+      </section>
+
+      <!-- ===== ③ 週課表 ===== -->
+      <section class="panel panel-timetable" aria-labelledby="h-timetable">
+        <h2 class="section-label" id="h-timetable"><span class="num">/02</span>週課表</h2>
+        <div class="timetable-scroll">
+          <div id="timetable" class="timetable" role="grid" aria-label="我的週課表，星期一到五，第 1 到 10 節"></div>
+        </div>
+        <p class="legend">
+          <span class="legend-item"><i class="swatch swatch-taken"></i>已選</span>
+          <span class="legend-item"><i class="swatch swatch-preview"></i>預覽</span>
+          <span class="legend-item"><i class="swatch swatch-conflict"></i>衝堂</span>
+          <span class="legend-hint">滑過或選取左側課程，可在課表上預覽時段。</span>
+        </p>
+      </section>
+
+      <!-- ===== ④ 我的候補與操作紀錄 ===== -->
+      <aside class="panel panel-side">
+        <section aria-labelledby="h-wait">
+          <h2 class="section-label" id="h-wait"><span class="num">/03</span>我的候補</h2>
+          <ul id="my-waits" class="my-waits"></ul>
+          <p id="wait-empty" class="empty">目前沒有排候補。額滿的課可以按「排候補」加入隊尾。</p>
+        </section>
+        <section aria-labelledby="h-log">
+          <h2 class="section-label" id="h-log"><span class="num">/04</span>操作紀錄</h2>
+          <ol id="log" class="log"></ol>
+        </section>
+      </aside>
+    </main>
+
+    <!-- ===== ⑤ 資料結構透視面板（可收合）：把每次操作背後的 Queue / Stack / Set 畫出來 ===== -->
+    <details class="inspector" id="inspector" open>
+      <summary class="inspector-summary">
+        <span class="section-label"><span class="num">/05</span>資料結構透視面板</span>
+        <span class="last-op">LAST OP <code id="last-op">尚無操作</code></span>
+      </summary>
+      <div class="inspector-grid">
+        <section class="inspect inspect-queue" aria-labelledby="h-queue">
+          <h3 id="h-queue" class="inspect-title">QUEUE · 候補佇列 <span id="queue-course" class="inspect-meta"></span></h3>
+          <div id="queue-view" class="queue-view"></div>
+          <p class="inspect-note">先進先出：有人退選時，從 front 端 poll() 遞補。</p>
+        </section>
+        <section class="inspect inspect-stack" aria-labelledby="h-stack">
+          <h3 id="h-stack" class="inspect-title">STACK · 復原堆疊 <span id="stack-size" class="inspect-meta"></span></h3>
+          <ol id="stack-view" class="stack-view"></ol>
+          <p class="inspect-note">後進先出：按「復原」會 pop() 最上面那筆。</p>
+        </section>
+        <section class="inspect inspect-set" aria-labelledby="h-set">
+          <h3 id="h-set" class="inspect-title">SET · 已佔時段 <span id="set-size" class="inspect-meta"></span></h3>
+          <p id="set-view" class="set-view"></p>
+          <p class="inspect-note">衝堂檢查：課程時段與這個集合 retainAll() 後不為空，就是衝堂。</p>
+        </section>
+      </div>
+    </details>
+
+    <footer class="statusbar">
+      <span><i class="dot"></i><span id="status-text">JAVA ONLINE</span></span>
+      <span>STUDENTS <b id="student-count">16</b></span>
+      <span>UNDO <b id="undo-size">0</b>/10</span>
+      <span class="statusbar-right">DATA STRUCTURES · 115-1 · GROUP 07</span>
+    </footer>
+
+    <!-- 遞補通知（設計檔 ⑥）：玩家從候補被補上時，從右上角跳出 -->
+    <div id="toasts" class="toasts" aria-live="assertive"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

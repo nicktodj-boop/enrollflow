@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  EnrollFlow：資料結構選課候補模擬器（G9 期末作品）
+
+  Maven 專案設定。NetBeans、IntelliJ、Eclipse、VS Code 都能直接「Open Project」開啟。
+  - 以 Java 8 編譯（maven.compiler.release = 8），與網頁版 build.sh 的 javac --release 8 一致。
+    release 參數需要 JDK 9 以上才能編譯，產出的 class 檔可在 Java 8 執行。
+  - exec.mainClass 指定主程式，NetBeans 按 Run 會直接執行終端機版。
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>g9</groupId>
+    <artifactId>enrollflow</artifactId>
+    <version>0.1.0</version>
+    <packaging>jar</packaging>
+    <name>EnrollFlow</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>8</maven.compiler.release>
+        <exec.mainClass>g9.enrollflow.Main</exec.mainClass>
+    </properties>
+
+    <dependencies>
+        <!-- 單元測試用；JUnit 5 支援 Java 8 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+            <!-- mvn exec:java 可直接執行終端機版 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <mainClass>${exec.mainClass}</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

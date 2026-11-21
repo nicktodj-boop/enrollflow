@@ -1,0 +1,775 @@
+{
+  "_comment": "示範資料：網址加 ?demo 時讀這個檔，不載入 Java。課程為淡江資管系 115-1 大二、大三真實課程（名額已縮小），選課狀態與同學姓名是虛構的。欄位與 CourseSystem.getStateJson() 相同。",
+  "day": 3,
+  "totalDays": 10,
+  "finished": false,
+  "credits": 10,
+  "maxCredits": 16,
+  "missionMode": false,
+  "studentCount": 61,
+  "undoSize": 4,
+  "lastOp": "offer()",
+  "courses": [
+    {
+      "code": "2210",
+      "name": "經濟學 A",
+      "teacher": "林士全",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 4,
+      "waiting": 0,
+      "slotLabel": "三1 三2 一2",
+      "grade": 2,
+      "required": true,
+      "taken": true,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        301,
+        302,
+        102
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2211",
+      "name": "經濟學 B",
+      "teacher": "林士全",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 6,
+      "waiting": 2,
+      "slotLabel": "三3 三4 二8",
+      "grade": 2,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        303,
+        304,
+        208
+      ],
+      "waitlist": [
+        "蔡品珊",
+        "廖君佩"
+      ]
+    },
+    {
+      "code": "2212",
+      "name": "經濟學 C",
+      "teacher": "陳炤良",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 2,
+      "waiting": 0,
+      "slotLabel": "四1 四2 三1",
+      "grade": 2,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2210",
+      "slots": [
+        401,
+        402,
+        301
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2213",
+      "name": "作業系統 A",
+      "teacher": "周清江",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 6,
+      "waiting": 0,
+      "slotLabel": "一3 一4 二9",
+      "grade": 2,
+      "required": true,
+      "taken": true,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        103,
+        104,
+        209
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2214",
+      "name": "作業系統 B",
+      "teacher": "周清江",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 4,
+      "waiting": 0,
+      "slotLabel": "一8 一9 二4",
+      "grade": 2,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2216",
+      "slots": [
+        108,
+        109,
+        204
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2215",
+      "name": "作業系統 C",
+      "teacher": "魏世杰",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 1,
+      "waiting": 0,
+      "slotLabel": "三8 三9 三2",
+      "grade": 2,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2210",
+      "slots": [
+        308,
+        309,
+        302
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2216",
+      "name": "網路與通訊 A",
+      "teacher": "鄭培宇",
+      "credits": 2,
+      "capacity": 7,
+      "enrolled": 2,
+      "waiting": 0,
+      "slotLabel": "一6 一7 一8",
+      "grade": 2,
+      "required": true,
+      "taken": true,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        106,
+        107,
+        108
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2217",
+      "name": "網路與通訊 B",
+      "teacher": "鄭培宇",
+      "credits": 2,
+      "capacity": 7,
+      "enrolled": 5,
+      "waiting": 0,
+      "slotLabel": "四3 四4 四2",
+      "grade": 2,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        403,
+        404,
+        402
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2218",
+      "name": "網路與通訊 C",
+      "teacher": "鄭培宇",
+      "credits": 2,
+      "capacity": 7,
+      "enrolled": 1,
+      "waiting": 0,
+      "slotLabel": "三3 三4 三5",
+      "grade": 2,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        303,
+        304,
+        305
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2219",
+      "name": "程式設計與資料結構 A",
+      "teacher": "張昭憲",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 6,
+      "waiting": 3,
+      "slotLabel": "三3 三4 五5 一10",
+      "grade": 2,
+      "required": true,
+      "taken": false,
+      "myPosition": 2,
+      "conflictWith": "",
+      "slots": [
+        303,
+        304,
+        505,
+        110
+      ],
+      "waitlist": [
+        "郭柏志",
+        "你",
+        "王晴婷"
+      ]
+    },
+    {
+      "code": "2220",
+      "name": "程式設計與資料結構 B",
+      "teacher": "魏世杰",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 3,
+      "waiting": 0,
+      "slotLabel": "二6 二7 二9 二10",
+      "grade": 2,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2213",
+      "slots": [
+        206,
+        207,
+        209,
+        210
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2221",
+      "name": "程式設計與資料結構 C",
+      "teacher": "鄭元成",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 5,
+      "waiting": 0,
+      "slotLabel": "四8 五3 五4 一4",
+      "grade": 2,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2213",
+      "slots": [
+        408,
+        503,
+        504,
+        104
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2222",
+      "name": "企業電子化",
+      "teacher": "朱志平",
+      "credits": 2,
+      "capacity": 5,
+      "enrolled": 2,
+      "waiting": 0,
+      "slotLabel": "五6 五7",
+      "grade": 2,
+      "required": false,
+      "taken": true,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        506,
+        507
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2223",
+      "name": "基礎數學",
+      "teacher": "廖賀田",
+      "credits": 2,
+      "capacity": 8,
+      "enrolled": 5,
+      "waiting": 0,
+      "slotLabel": "五8 五9",
+      "grade": 2,
+      "required": false,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        508,
+        509
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2224",
+      "name": "進階程式設計 A",
+      "teacher": "鄭元成",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 2,
+      "waiting": 0,
+      "slotLabel": "五6 五7 五8",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2222",
+      "slots": [
+        506,
+        507,
+        508
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2225",
+      "name": "進階程式設計 B",
+      "teacher": "林仁祥",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 1,
+      "waiting": 0,
+      "slotLabel": "五6 五7 三2",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2210",
+      "slots": [
+        506,
+        507,
+        302
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2226",
+      "name": "進階程式設計 C",
+      "teacher": "林仁祥",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 1,
+      "waiting": 0,
+      "slotLabel": "三9 三10 五2",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        309,
+        310,
+        502
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2227",
+      "name": "網路程式設計 A",
+      "teacher": "徐煥智",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 4,
+      "waiting": 0,
+      "slotLabel": "二3 二4 三8 五2",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        203,
+        204,
+        308,
+        502
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2228",
+      "name": "網路程式設計 B",
+      "teacher": "徐煥智",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 4,
+      "waiting": 0,
+      "slotLabel": "二8 四3 四4 五1",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        208,
+        403,
+        404,
+        501
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2229",
+      "name": "網路程式設計 C",
+      "teacher": "陳有科",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 1,
+      "waiting": 0,
+      "slotLabel": "二9 二10 四10 二5",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2213",
+      "slots": [
+        209,
+        210,
+        410,
+        205
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2230",
+      "name": "系統分析與設計 A",
+      "teacher": "徐煥智",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 2,
+      "waiting": 0,
+      "slotLabel": "二6 三6 三7 三9",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        206,
+        306,
+        307,
+        309
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2231",
+      "name": "系統分析與設計 B",
+      "teacher": "游佳萍",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 1,
+      "waiting": 0,
+      "slotLabel": "二3 二4 三1 四10",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2210",
+      "slots": [
+        203,
+        204,
+        301,
+        410
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2232",
+      "name": "系統分析與設計 C",
+      "teacher": "游佳萍",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 5,
+      "waiting": 0,
+      "slotLabel": "三2 三3 三4 三1",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2210",
+      "slots": [
+        302,
+        303,
+        304,
+        301
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2233",
+      "name": "財務管理 A",
+      "teacher": "張應華",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 4,
+      "waiting": 0,
+      "slotLabel": "三1 三2 三5",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2210",
+      "slots": [
+        301,
+        302,
+        305
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2234",
+      "name": "財務管理 B",
+      "teacher": "張應華",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 1,
+      "waiting": 0,
+      "slotLabel": "二6 二7 三3",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        206,
+        207,
+        303
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2235",
+      "name": "財務管理 C",
+      "teacher": "鄭元成",
+      "credits": 3,
+      "capacity": 6,
+      "enrolled": 5,
+      "waiting": 0,
+      "slotLabel": "二3 二4 二7",
+      "grade": 3,
+      "required": true,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        203,
+        204,
+        207
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2236",
+      "name": "組織管理",
+      "teacher": "廖崇硯",
+      "credits": 2,
+      "capacity": 8,
+      "enrolled": 8,
+      "waiting": 3,
+      "slotLabel": "四6 四7",
+      "grade": 3,
+      "required": false,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        406,
+        407
+      ],
+      "waitlist": [
+        "洪怡佩",
+        "邱昱庭",
+        "謝承昱"
+      ]
+    },
+    {
+      "code": "2237",
+      "name": "數位化公司管理",
+      "teacher": "傅大煜",
+      "credits": 2,
+      "capacity": 8,
+      "enrolled": 1,
+      "waiting": 0,
+      "slotLabel": "一3 一4",
+      "grade": 3,
+      "required": false,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2213",
+      "slots": [
+        103,
+        104
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2241",
+      "name": "專業排版與設計",
+      "teacher": "林慶昌",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 2,
+      "waiting": 0,
+      "slotLabel": "五9 五10",
+      "grade": 3,
+      "required": false,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        509,
+        510
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2242",
+      "name": "簡報設計技巧",
+      "teacher": "彭宗仁",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 6,
+      "waiting": 0,
+      "slotLabel": "二1 二2",
+      "grade": 3,
+      "required": false,
+      "taken": true,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        201,
+        202
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2243",
+      "name": "網路規劃與實作",
+      "teacher": "魏世杰",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 5,
+      "waiting": 0,
+      "slotLabel": "一6 一7",
+      "grade": 3,
+      "required": false,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "2216",
+      "slots": [
+        106,
+        107
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2244",
+      "name": "人工智慧創新與應用",
+      "teacher": "傅大煜",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 1,
+      "waiting": 0,
+      "slotLabel": "四1 四2",
+      "grade": 3,
+      "required": false,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        401,
+        402
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2245",
+      "name": "Web3的應用與實務",
+      "teacher": "李正冬",
+      "credits": 2,
+      "capacity": 8,
+      "enrolled": 8,
+      "waiting": 0,
+      "slotLabel": "五3 五4",
+      "grade": 3,
+      "required": false,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        503,
+        504
+      ],
+      "waitlist": []
+    },
+    {
+      "code": "2246",
+      "name": "LINUX作業系統",
+      "teacher": "陳孟勛",
+      "credits": 2,
+      "capacity": 6,
+      "enrolled": 5,
+      "waiting": 0,
+      "slotLabel": "四8 四9",
+      "grade": 3,
+      "required": false,
+      "taken": false,
+      "myPosition": 0,
+      "conflictWith": "",
+      "slots": [
+        408,
+        409
+      ],
+      "waitlist": []
+    }
+  ],
+  "myCourses": [
+    "2210",
+    "2213",
+    "2216",
+    "2222",
+    "2242"
+  ],
+  "occupied": [
+    301,
+    302,
+    102,
+    103,
+    104,
+    209,
+    106,
+    107,
+    108,
+    506,
+    507,
+    201,
+    202
+  ],
+  "undoTop": [
+    "JOIN_WAIT 2219",
+    "ADD 2242",
+    "ADD 2210",
+    "DROP 2211"
+  ],
+  "log": [
+    "第 3 天：你排入 2219 程式設計與資料結構 A 候補，目前第 2 位",
+    "第 3 天：你加選 2242 簡報設計技巧",
+    "第 3 天：你加選 2210 經濟學 A",
+    "第 3 天：你退選 2211 經濟學 B，候補第 1 位 郭柏志 遞補",
+    "第 2 天：蔡品珊 排入 2211 經濟學 B 候補",
+    "第 2 天：你加選 2222 企業電子化",
+    "加退選開始，共 10 天"
+  ]
+}

@@ -1,0 +1,5 @@
+# 組員混用 macOS 與 Windows，固定換行字元，避免腳本在另一個系統跑不起來
+* text=auto
+*.sh text eol=lf
+*.bat text eol=crlf
+*.class binary

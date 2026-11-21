@@ -1,0 +1,16 @@
+# Maven 輸出（網頁版的 docs/**/*.class 要 commit，不在這裡排除）
+target/
+
+# IDE 個人設定
+.idea/
+*.iml
+.vscode/
+nbproject/private/
+nb-configuration.xml
+
+# 系統檔
+.DS_Store
+Thumbs.db
+
+# build.bat 暫存
+sources.txt
