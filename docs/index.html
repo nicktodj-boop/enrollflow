@@ -89,6 +89,37 @@
       <button id="btn-again" class="btn btn-violet" type="button">再玩一次 <span aria-hidden="true">↗</span></button>
     </section>
 
+    <!-- 失敗畫面：加退選結束時學分低於下限（state.passed 為 false）就蓋在主畫面上。
+         「查看課表」關掉後，上方結算列仍會標示學分不足。 -->
+    <div id="fail" class="fail" hidden>
+      <section class="fail-card" role="alertdialog" aria-modal="true" aria-labelledby="fail-title" aria-describedby="fail-text">
+        <div class="fail-head">
+          <p class="micro">/ENROLL_RESULT · ERR_MIN_CREDITS</p>
+          <p class="micro fail-exit">EXIT 1</p>
+        </div>
+        <h2 class="fail-title" id="fail-title">FAILED<span class="cursor" aria-hidden="true">_</span></h2>
+        <p class="fail-sub">學分不足</p>
+        <div class="fail-meter">
+          <div class="fail-stat">
+            <span class="fail-label">最終學分</span>
+            <span class="fail-num" id="fail-credits">00</span>
+          </div>
+          <span class="fail-vs" aria-hidden="true">&lt;</span>
+          <div class="fail-stat">
+            <span class="fail-label">最低門檻</span>
+            <span class="fail-num fail-num-min" id="fail-min">10</span>
+          </div>
+        </div>
+        <!-- 16 格學分：實心 = 已選、斜線 = 距離門檻還差的學分 -->
+        <div class="fail-bar" id="fail-bar" aria-hidden="true"></div>
+        <p class="fail-text" id="fail-text"></p>
+        <div class="fail-actions">
+          <button id="btn-fail-again" class="btn btn-ink" type="button">再玩一次 <span aria-hidden="true">↗</span></button>
+          <button id="btn-fail-close" class="btn btn-ghost" type="button">查看課表</button>
+        </div>
+      </section>
+    </div>
+
     <main class="grid">
       <!-- ===== ② 課程列表 ===== -->
       <section class="panel panel-courses" aria-labelledby="h-courses">

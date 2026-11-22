@@ -20,6 +20,9 @@ public class Student {
     /** 每人學分上限。 */
     public static final int MAX_CREDITS = 16;
 
+    /** 學分下限：加退選結束時低於這個數字就算失敗（畫面顯示「請申請休學」）。 */
+    public static final int MIN_CREDITS = 10;
+
     private final String id;
     private final String name;
     private final boolean player;

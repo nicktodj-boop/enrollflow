@@ -43,6 +43,8 @@ const ui = {
   keyword: '',
   weekday: 0,
   grade: 0,      // 0 = 全部年級、2 = 大二、3 = 大三
+  failDismissed: false,   // 失敗畫面按過「查看課表」就不再蓋上來（開新局時重設）
+  failFocus: false,       // 失敗畫面剛出現、還沒把焦點移到「再玩一次」
 };
 
 /**
@@ -351,6 +353,8 @@ function bindEvents() {
   $('btn-next').addEventListener('click', () => callJava('nextDay', () => system.nextDay()));
   $('btn-new').addEventListener('click', newGame);
   $('btn-again').addEventListener('click', newGame);
+  $('btn-fail-again').addEventListener('click', newGame);
+  $('btn-fail-close').addEventListener('click', closeFail);
 
   // 搜尋與星期篩選只影響「顯示哪些課」，在 JS 端過濾即可，不必呼叫 Java
   $('search').addEventListener('input', (e) => {
@@ -378,6 +382,10 @@ function bindEvents() {
 
   // 快捷鍵 U = 復原（上方列按鈕上標示的那個鍵）；正在輸入文字時不觸發
   document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$('fail').hidden) {
+      closeFail();
+      return;
+    }
     const typing = e.target instanceof HTMLInputElement;
     if (!typing && !e.metaKey && !e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
       if (!$('btn-undo').disabled) $('btn-undo').click();
@@ -429,6 +437,7 @@ async function callJava(name, action, code) {
 /** 開新局：重建 Java 端的所有資料，畫面狀態一併清空。 */
 async function newGame() {
   ui.selectedCode = null;
+  ui.failDismissed = false;
   previousPositions = null;
   await callJava('newGame', async () => {
     await system.newGame(0, false);
@@ -475,6 +484,7 @@ function render() {
   if (!state) return;
   renderTopbar();
   renderResult();
+  renderFail();
   renderCourses();
   renderTimetable();
   renderSide();
@@ -511,7 +521,49 @@ function renderResult() {
   if (!state.finished) return;
   const taken = state.courses.filter((c) => c.taken);
   const names = taken.map((c) => `${c.code} ${c.name}`).join('、') || '沒有選到任何課';
-  $('result-text').textContent = `最終 ${state.credits} 學分，共 ${taken.length} 門：${names}。`;
+  $('result').classList.toggle('is-fail', !state.passed);
+  $('result-title').textContent = state.passed ? '加退選結束' : '學分不足';
+  $('result-text').textContent = `最終 ${state.credits} 學分，共 ${taken.length} 門：${names}。`
+    + (state.passed ? '' : `低於 ${state.minCredits} 學分下限，請申請休學。`);
+}
+
+/**
+ * 失敗畫面：加退選結束且學分低於下限時蓋在主畫面上（是否及格由 Java 的 isPassed() 判斷）。
+ * 剛出現時把焦點移到「再玩一次」，鍵盤使用者不必找按鈕。
+ */
+function renderFail() {
+  const box = $('fail');
+  const show = state.finished && !state.passed && !ui.failDismissed;
+  const wasHidden = box.hidden;
+  box.hidden = !show;
+  if (!show) return;
+
+  const { credits, minCredits, maxCredits } = state;
+  $('fail-credits').textContent = pad2(credits);
+  $('fail-min').textContent = pad2(minCredits);
+  $('fail-text').replaceChildren(
+    `本學期只選到 ${credits} 學分，還差 ${minCredits - credits} 學分才達到 ${minCredits} 學分下限。`,
+    el('br'),
+    el('strong', { text: '請申請休學。' }));
+  $('fail-bar').replaceChildren(...Array.from({ length: maxCredits }, (_, i) => {
+    const n = i + 1;
+    const cls = [n <= credits ? 'is-on' : n <= minCredits ? 'is-gap' : '', n === minCredits ? 'is-min' : ''];
+    return el('i', { className: cls.join(' ').trim() });
+  }));
+  // Java 呼叫進行中按鈕是停用的，停用的按鈕拿不到焦點；等 callJava 結束後的那次重畫再移
+  if (wasHidden) ui.failFocus = true;
+  const again = $('btn-fail-again');
+  if (ui.failFocus && !again.disabled) {
+    again.focus();
+    ui.failFocus = false;
+  }
+}
+
+/** 關掉失敗畫面，回到主畫面看最後的課表；結算列仍會顯示學分不足。 */
+function closeFail() {
+  ui.failDismissed = true;
+  renderFail();
+  $('btn-again').focus();
 }
 
 // ------------------------------------------------------------

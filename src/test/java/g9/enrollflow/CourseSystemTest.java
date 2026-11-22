@@ -313,6 +313,40 @@ class CourseSystemTest {
     }
 
     @Test
+    @DisplayName("結束時低於 10 學分：passed 為 false，紀錄寫「請申請休學」")
+    void belowMinCreditsFails() {
+        cs.addCourse("2210");                         // 只選 2 學分
+        String last = "";
+        for (int i = 0; i < CourseSystem.TOTAL_DAYS; i++) {
+            last = cs.nextDay();
+        }
+        assertFalse(cs.isPassed());
+        assertTrue(last.contains("請申請休學"), last);
+        String state = cs.getStateJson();
+        assertTrue(state.contains("\"passed\":false") && state.contains("\"minCredits\":10"));
+        assertTrue(state.contains("學分不足 10 學分，請申請休學"));
+    }
+
+    @Test
+    @DisplayName("結束時達到 10 學分：passed 為 true，不出現休學訊息")
+    void enoughCreditsPasses() {
+        for (Course c : cs.getCourses()) {
+            if (me.getCredits() >= Student.MIN_CREDITS) {
+                break;
+            }
+            cs.addCourse(c.getCode());
+        }
+        assertTrue(me.getCredits() >= Student.MIN_CREDITS);
+        String last = "";
+        for (int i = 0; i < CourseSystem.TOTAL_DAYS; i++) {
+            last = cs.nextDay();
+        }
+        assertTrue(cs.isPassed());
+        assertFalse(last.contains("休學"), last);
+        assertTrue(cs.getStateJson().contains("\"passed\":true"));
+    }
+
+    @Test
     @DisplayName("依關鍵字與星期搜尋")
     void search() {
         assertTrue(cs.search("經濟", 0).size() >= 3);

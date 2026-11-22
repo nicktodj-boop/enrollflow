@@ -5,6 +5,8 @@
   "finished": false,
   "credits": 10,
   "maxCredits": 16,
+  "minCredits": 10,
+  "passed": true,
   "missionMode": false,
   "studentCount": 61,
   "undoSize": 4,
@@ -804,6 +806,6 @@
     "第 3 天：你退選 2211 經濟學 B，候補第 1 位 郭柏志 遞補",
     "第 2 天：蔡品珊 排入 2211 經濟學 B 候補",
     "第 2 天：你加選 2222 企業電子化",
-    "加退選開始，共 10 天"
+    "加退選開始，共 10 天；學分需在 10–16 之間"
   ]
 }

@@ -376,6 +376,71 @@ button, input { font: inherit; color: inherit; }
 .result-title { font-family: var(--font-display); font-weight: 400; font-size: 48px; line-height: 1; margin: 0; }
 .result-text { margin: 0; flex: 1 1 280px; }
 
+/* 學分不足：結算列改成警示色 */
+.result.is-fail { background: var(--alert); color: var(--surface-100); }
+.result.is-fail .btn-violet { background: var(--surface-100); border-color: var(--surface-100); color: var(--alert); }
+
+/* ===================== 失敗畫面（學分低於下限） ===================== */
+.fail {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: var(--space-6) max(16px, env(safe-area-inset-left, 0px));
+  background: color-mix(in srgb, var(--surface-000) 55%, transparent);
+  backdrop-filter: grayscale(1);
+  -webkit-backdrop-filter: grayscale(1);
+  overflow-y: auto;
+  animation: fail-fade 200ms steps(4) both;
+}
+.fail-card {
+  width: min(560px, 100%);
+  background: var(--surface-100);
+  border: var(--border-rule) solid var(--ink);
+  border-top: 10px solid var(--alert);
+  padding: var(--space-8);
+  animation: fail-drop 360ms steps(6) both;
+}
+.fail-head { display: flex; justify-content: space-between; gap: var(--space-4); }
+.fail-exit { color: var(--alert); font-weight: 700; }
+.fail-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(64px, 16vw, 112px);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  margin: var(--space-4) 0 0;
+  color: var(--alert);
+}
+.fail-title .cursor { color: var(--alert); }
+.fail-sub { margin: var(--space-1) 0 var(--space-6); font-weight: 700; letter-spacing: 0.04em; }
+
+.fail-meter { display: flex; align-items: flex-end; gap: var(--space-6); }
+.fail-stat { display: grid; gap: var(--space-1); }
+.fail-label { font-size: 11px; letter-spacing: 0.08em; color: var(--ink-muted); }
+.fail-num { font-family: var(--font-num); font-weight: 600; font-size: 56px; line-height: 0.9; color: var(--alert); font-variant-numeric: tabular-nums; }
+.fail-num-min { color: var(--ink); }
+.fail-vs { font-family: var(--font-num); font-size: 40px; line-height: 1; color: var(--ink-faint); padding-bottom: 4px; }
+
+.fail-bar { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 2px; height: 18px; margin: var(--space-6) 0 var(--space-2); }
+.fail-bar i { background: var(--line); }
+.fail-bar i.is-on { background: var(--alert); }
+.fail-bar i.is-gap { background: repeating-linear-gradient(135deg, var(--alert) 0 2px, var(--alert-soft) 2px 6px); }
+/* 門檻那一格右邊畫一條粗線 */
+.fail-bar i.is-min { box-shadow: 3px 0 0 var(--ink); }
+
+.fail-text { margin: var(--space-4) 0 var(--space-6); line-height: 1.7; }
+.fail-text strong { color: var(--alert); font-size: 18px; }
+.fail-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+@keyframes fail-fade { from { opacity: 0; } to { opacity: 1; } }
+/* 卡片像蓋章一樣落下：步進位移，不用彈性曲線 */
+@keyframes fail-drop {
+  from { opacity: 0; transform: translateY(-24px); }
+  to { opacity: 1; transform: none; }
+}
+
 /* 主網格：課程列表｜週課表｜側欄；面板之間用 1px 線、不留縫 */
 .grid {
   flex: 1;

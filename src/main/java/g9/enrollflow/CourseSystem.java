@@ -117,7 +117,7 @@ public class CourseSystem {
         simulator.assignWishlists(simulated, new ArrayList<Course>(courses.values()));
         this.missionMode = missionMode;
         day = 1;
-        log.add("加退選開始，共 " + TOTAL_DAYS + " 天");
+        log.add("加退選開始，共 " + TOTAL_DAYS + " 天；學分需在 " + Student.MIN_CREDITS + "–" + Student.MAX_CREDITS + " 之間");
     }
 
     // ===================== 玩家操作 =====================
@@ -342,6 +342,11 @@ public class CourseSystem {
         if (isFinished()) {
             log.add("加退選結束：你選上 " + player.getCourseCodes().size() + " 門課，共 "
                     + player.getCredits() + " 學分");
+            if (!isPassed()) {
+                String fail = "學分不足 " + Student.MIN_CREDITS + " 學分，請申請休學";
+                log.add(fail);
+                summary += "。" + fail;
+            }
         }
         return JsonWriter.result(true, summary);
     }
@@ -665,6 +670,15 @@ public class CourseSystem {
         return day > TOTAL_DAYS;
     }
 
+    /**
+     * 是否達到學分下限。加退選期間隨時可查，畫面只在結束時用它判斷要不要顯示失敗畫面。
+     *
+     * @return 玩家學分 ≥ {@value Student#MIN_CREDITS} 時為 true
+     */
+    public boolean isPassed() {
+        return player.getCredits() >= Student.MIN_CREDITS;
+    }
+
     /** @return 目前第幾天 */
     public int getDay() {
         return day;
@@ -794,7 +808,7 @@ public class CourseSystem {
      *
      * <p>欄位一覽（網頁 docs/app.js 依這些名稱讀取）：</p>
      * <ul>
-     *   <li>{@code day, totalDays, finished, credits, maxCredits, missionMode, undoSize, lastOp}</li>
+     *   <li>{@code day, totalDays, finished, credits, maxCredits, minCredits, passed, missionMode, undoSize, lastOp}</li>
      *   <li>{@code courses[]}：每門課的基本資料（含 {@code grade} 年級、{@code required} 必修）、名額、候補名單 {@code waitlist[]}（隊首在前），
      *       以及從玩家角度算出的 {@code taken}、{@code myPosition}、{@code conflictWith}、
      *       {@code sameSubjectWith}（已選的同科目別班課號）</li>
@@ -815,6 +829,8 @@ public class CourseSystem {
                 .field("finished", isFinished())
                 .field("credits", player.getCredits())
                 .field("maxCredits", Student.MAX_CREDITS)
+                .field("minCredits", Student.MIN_CREDITS)
+                .field("passed", isPassed())
                 .field("missionMode", missionMode)
                 .field("studentCount", students.size())
                 .field("undoSize", undoStack.size())
