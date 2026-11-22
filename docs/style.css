@@ -17,8 +17,8 @@
   --surface-000: #ededef;
   --surface-100: #f7f7f8;
   --ink: #0a0a0a;
-  --ink-muted: #5c5c66;
-  --ink-faint: #8e8e93;
+  --ink-muted: #45454e;    /* 小字：surface-000 上約 8.1:1 */
+  --ink-faint: #62626b;    /* 次要小字：約 5.2:1，仍過 WCAG AA */
   --line: #cfcfd6;
   --on-ink: #ffffff;
   --violet: #7b4dff;
@@ -32,6 +32,8 @@
   --alert-soft: #fbdde1;   /* 衝堂格底色 */
 
   --font-display: "Bebas Neue", "Oswald", "Arial Narrow", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  /* 大數字（天數、學分、順位、百分比）：方角數位字，跟主標的 Bebas 分開 */
+  --font-num: "Chakra Petch", "JetBrains Mono", ui-monospace, monospace;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", monospace;
 
   --space-1: 4px;
@@ -55,8 +57,8 @@
     --surface-000: #0e0e11;
     --surface-100: #17171c;
     --ink: #ededef;
-    --ink-muted: #9a9aa6;
-    --ink-faint: #5a5a64;
+    --ink-muted: #b8b8c2;
+    --ink-faint: #8a8a95;
     --line: #2c2c34;
     --on-ink: #0a0a0a;
     --violet: #8f6bff;
@@ -219,14 +221,15 @@ button, input { font: inherit; color: inherit; }
 .boot-bar i.is-head { background: var(--ink); animation: blink 0.5s steps(1) infinite; }
 .boot-bar.is-error i.is-on { background: var(--alert); }
 .boot-pct {
-  font-family: var(--font-display);
-  font-size: 40px;
+  font-family: var(--font-num);
+  font-weight: 600;
+  font-size: 34px;
   line-height: 0.8;
   font-variant-numeric: tabular-nums;
   min-width: 3.2ch;
   text-align: right;
 }
-.boot-pct small { font-size: 20px; color: var(--ink-muted); }
+.boot-pct small { font-size: 16px; color: var(--ink-muted); }
 
 .boot-msg { margin: var(--space-3) 0 0; font-size: 12px; color: var(--ink-muted); }
 .boot-msg:empty { display: none; }
@@ -312,12 +315,13 @@ button, input { font: inherit; color: inherit; }
 .meter-value {
   grid-row: 1 / span 2;
   grid-column: 2;
-  font-family: var(--font-display);
-  font-size: 44px;
+  font-family: var(--font-num);
+  font-weight: 600;
+  font-size: 36px;
   line-height: 0.9;
   font-variant-numeric: tabular-nums;
 }
-.meter-value small { font-size: 22px; color: var(--ink-muted); }
+.meter-value small { font-size: 18px; color: var(--ink-muted); }
 
 /* 天數刻度：10 格細線，已過的天數用 ink，今天用 violet */
 .ticks, .cells { display: flex; gap: 2px; align-self: end; }
@@ -588,7 +592,7 @@ button, input { font: inherit; color: inherit; }
   padding: var(--space-3) 0;
   border-bottom: var(--border-hair) solid var(--line);
 }
-/* 順位用號碼牌樣式：Bebas 大數字 */
+/* 順位用號碼牌樣式：Chakra Petch 大數字 */
 .ticket {
   grid-row: 1 / span 2;
   display: grid;
@@ -596,12 +600,13 @@ button, input { font: inherit; color: inherit; }
   min-width: 52px;
   padding: var(--space-1) var(--space-2) 0;
   border: var(--border-rule) solid var(--violet);
-  font-family: var(--font-display);
-  font-size: 32px;
+  font-family: var(--font-num);
+  font-weight: 600;
+  font-size: 26px;
   line-height: 1;
   color: var(--violet-ink);
 }
-.ticket small { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; color: var(--ink-muted); padding-bottom: 2px; }
+.ticket small { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-muted); padding-bottom: 2px; }
 .my-wait-name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .my-wait-meta { font-size: 11px; color: var(--ink-muted); }
 
@@ -676,14 +681,14 @@ button, input { font: inherit; color: inherit; }
   left: 4px; right: 4px; top: 4px;
   border-top: var(--border-hair) dashed var(--ink-faint);
 }
-.q-num { font-family: var(--font-display); font-size: 28px; line-height: 1; margin-top: var(--space-1); }
+.q-num { font-family: var(--font-num); font-weight: 600; font-size: 22px; line-height: 1; margin-top: var(--space-1); }
 .q-name { font-size: 11px; white-space: nowrap; }
 .q-item.is-front { border-width: var(--border-rule); }
 .q-item.is-front .q-num { color: var(--violet-ink); }
 .q-item.is-me { background: var(--violet); border-color: var(--violet); color: var(--on-violet); }
 .q-item.is-me .q-num { color: var(--on-violet); }
 .q-item.is-me::before { border-color: currentColor; }
-.q-tag { font-size: 9px; letter-spacing: 0.08em; color: var(--ink-muted); }
+.q-tag { font-size: 10px; letter-spacing: 0.08em; color: var(--ink-muted); }
 .q-item.is-me .q-tag { color: var(--on-violet); }
 .queue-empty { font-size: 12px; color: var(--ink-muted); align-self: center; }
 
@@ -723,7 +728,7 @@ button, input { font: inherit; color: inherit; }
   letter-spacing: 0.08em;
 }
 .statusbar b { font-weight: 700; }
-.statusbar-right { margin-left: auto; opacity: 0.7; }
+.statusbar-right { margin-left: auto; }
 .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); margin-right: var(--space-2); vertical-align: 1px; }
 
 .toasts {
