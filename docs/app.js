@@ -434,7 +434,9 @@ function bindEvents() {
       if (e.key === 'Escape') closeRules();
       return;
     }
-    if (e.key === '?' && !(e.target instanceof HTMLInputElement)) {
+    // 快捷鍵用 e.code（實體按鍵位置）判斷，不用 e.key（打出來的字）：
+    // 開著注音輸入法時，U 鍵的 e.key 會是「ㄧ」或「Process」，Shift + / 會是「？」，用 e.key 會比對不到
+    if ((e.key === '?' || (e.code === 'Slash' && e.shiftKey)) && !(e.target instanceof HTMLInputElement)) {
       openRules($('btn-rules'));
       return;
     }
@@ -443,8 +445,9 @@ function bindEvents() {
       return;
     }
     const typing = e.target instanceof HTMLInputElement;
-    if (!typing && !e.metaKey && !e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
-      if (!$('btn-undo').disabled) $('btn-undo').click();
+    if (!typing && !e.metaKey && !e.ctrlKey && !e.altKey && (e.code === 'KeyU' || e.key === 'u' || e.key === 'U')) {
+      // 不看按鈕是否停用，直接交給 Java：堆疊空了也會回「沒有可以復原的操作」，按了才有反應
+      callJava('undo', () => system.undo());
     }
   });
 }

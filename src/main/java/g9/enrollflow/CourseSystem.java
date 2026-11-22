@@ -259,7 +259,10 @@ public class CourseSystem {
             return JsonWriter.result(false, "加退選期已結束");
         }
         if (undoStack.isEmpty()) {
-            return JsonWriter.result(false, "沒有可以復原的操作");
+            // 第 2 天以後堆疊是空的，多半是因為按了「下一天」被清空，順便告訴玩家
+            return JsonWriter.result(false, day > 1
+                    ? "沒有可以復原的操作（按「下一天」後，前一天的操作不能復原）"
+                    : "沒有可以復原的操作");
         }
         Action a = undoStack.pop();                           // 取出最近一次操作
         Course c = courses.get(a.getCourseCode());
