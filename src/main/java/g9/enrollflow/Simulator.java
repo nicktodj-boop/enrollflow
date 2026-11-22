@@ -34,6 +34,13 @@ public class Simulator {
     /** 每一科必修放進志願的機率；沒放的代表已經修過或延後修，讓必修班有滿有不滿。 */
     static final double REQUIRED_CHANCE = 0.75;
 
+    /**
+     * 排在候補的必修課，當天另外加選同科目其他有名額班級的機率。
+     * 這種人仍留在原本的候補名單裡，輪到他時會因「已選同科目別班」被跳過，
+     * 正是「排第一位不保證選上」的情境。
+     */
+    static final double SWITCH_SECTION_CHANCE = 0.40;
+
     /** 選修 1 門的機率；其餘的人選 2 門。 */
     static final double ONE_ELECTIVE_CHANCE = 0.50;
 
@@ -51,6 +58,9 @@ public class Simulator {
     };
 
     private final Random random;
+
+    /** 必修科目 → 該科目的各班（Map），在 {@link #assignWishlists} 建立，模擬改選別班時使用。 */
+    private final Map<String, List<Course>> sectionsBySubject = new LinkedHashMap<String, List<Course>>();
 
     /**
      * @param seed 亂數種子；0 表示用目前時間（每次不同）
@@ -94,7 +104,7 @@ public class Simulator {
      */
     public void assignWishlists(List<Student> students, List<Course> courses) {
         // 必修依科目分組；LinkedHashMap 保留課程順序，同一個種子每次分組結果都一樣
-        Map<String, List<Course>> sectionsBySubject = new LinkedHashMap<String, List<Course>>();
+        sectionsBySubject.clear();
         List<Course> electives = new ArrayList<Course>();
         for (Course c : courses) {
             if (!c.isRequired()) {
@@ -170,13 +180,72 @@ public class Simulator {
     /**
      * 讓所有模擬同學行動一天。實際的加退選透過 system 的方法進行，規則只寫在 CourseSystem 一處。
      *
+     * <ol>
+     *   <li>先把同學順序打亂（每天誰先搶不一樣），再一個一個處理。</li>
+     *   <li>每人有 {@value #ACT_CHANCE} 的機率行動：依志願順序，還沒選上、也沒在候補的課就加選；
+     *       額滿就排候補。衝堂或超學分的跳過。</li>
+     *   <li>正在候補的必修課，有 {@value #SWITCH_SECTION_CHANCE} 的機率改加選同科目其他有名額的班，
+     *       但不取消原本的候補（輪到時會被跳過）。</li>
+     *   <li>行動的人另有 {@value #DROP_CHANCE} 的機率隨機退掉一門已選的課，並把它從志願刪掉（放棄這門課）。
+     *       退選會立刻觸發遞補，可能補到玩家。</li>
+     * </ol>
+     *
      * @param system   選課系統
      * @param students 模擬同學
-     * @return 當天動作摘要，每筆一行，例如「王小明 加選 DS201」
+     * @return 第一行是當天統計，例如「同學加選 12 次、排候補 5 次、退選 1 次」；之後每行是一筆退選與遞補
      */
     public List<String> simulateDay(CourseSystem system, List<Student> students) {
-        // TODO(D)
-        throw new UnsupportedOperationException("Simulator.simulateDay 尚未實作");
+        List<Student> order = new ArrayList<Student>(students);
+        Collections.shuffle(order, random);
+
+        int adds = 0;
+        int waits = 0;
+        int drops = 0;
+        List<String> events = new ArrayList<String>();
+
+        for (Student s : order) {
+            if (random.nextDouble() >= ACT_CHANCE) {
+                continue;                                      // 今天沒上選課系統
+            }
+            // 走訪志願清單的複本：迴圈中不改動原本的 List
+            for (String code : new ArrayList<String>(s.getWishlist())) {
+                if (s.getCourseCodes().contains(code) || s.getWaitingCodes().contains(code)) {
+                    continue;                                  // 已選上或已在排隊
+                }
+                CourseSystem.Check result = system.simulateAdd(s, code);
+                if (result == CourseSystem.Check.OK) {
+                    adds++;
+                } else if (result == CourseSystem.Check.FULL && system.simulateJoin(s, code)) {
+                    waits++;
+                }
+            }
+            // 等不及的人：候補中的必修課，改加選同科目其他還有名額的班，但不取消原本的候補
+            for (String code : new ArrayList<String>(s.getWaitingCodes())) {
+                Course waited = system.getCourse(code);
+                List<Course> sections = sectionsBySubject.get(waited.getSubject());
+                if (sections == null || random.nextDouble() >= SWITCH_SECTION_CHANCE) {
+                    continue;
+                }
+                for (Course other : sections) {
+                    if (other != waited && system.simulateAdd(s, other.getCode()) == CourseSystem.Check.OK) {
+                        adds++;
+                        break;
+                    }
+                }
+            }
+            if (!s.getCourseCodes().isEmpty() && random.nextDouble() < DROP_CHANCE) {
+                List<String> taken = new ArrayList<String>(s.getCourseCodes());
+                String code = taken.get(random.nextInt(taken.size()));
+                s.getWishlist().remove(code);                  // List.remove(Object)：放棄後不再加選
+                events.addAll(system.simulateDrop(s, code));
+                drops++;
+            }
+        }
+
+        List<String> report = new ArrayList<String>();
+        report.add("同學加選 " + adds + " 次、排候補 " + waits + " 次、退選 " + drops + " 次");
+        report.addAll(events);
+        return report;
     }
 
     /** @return 共用的亂數產生器 */

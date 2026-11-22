@@ -24,6 +24,7 @@
       "taken": true,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         301,
         302,
@@ -45,6 +46,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "2210",
       "slots": [
         303,
         304,
@@ -69,6 +71,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2210",
+      "sameSubjectWith": "2210",
       "slots": [
         401,
         402,
@@ -90,6 +93,7 @@
       "taken": true,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         103,
         104,
@@ -111,6 +115,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2216",
+      "sameSubjectWith": "2213",
       "slots": [
         108,
         109,
@@ -132,6 +137,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2210",
+      "sameSubjectWith": "2213",
       "slots": [
         308,
         309,
@@ -153,6 +159,7 @@
       "taken": true,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         106,
         107,
@@ -174,6 +181,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "2216",
       "slots": [
         403,
         404,
@@ -195,6 +203,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "2216",
       "slots": [
         303,
         304,
@@ -216,6 +225,7 @@
       "taken": false,
       "myPosition": 2,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         303,
         304,
@@ -242,6 +252,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2213",
+      "sameSubjectWith": "",
       "slots": [
         206,
         207,
@@ -264,6 +275,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2213",
+      "sameSubjectWith": "",
       "slots": [
         408,
         503,
@@ -286,6 +298,7 @@
       "taken": true,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         506,
         507
@@ -306,6 +319,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         508,
         509
@@ -326,6 +340,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2222",
+      "sameSubjectWith": "",
       "slots": [
         506,
         507,
@@ -347,6 +362,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2210",
+      "sameSubjectWith": "",
       "slots": [
         506,
         507,
@@ -368,6 +384,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         309,
         310,
@@ -389,6 +406,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         203,
         204,
@@ -411,6 +429,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         208,
         403,
@@ -433,6 +452,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2213",
+      "sameSubjectWith": "",
       "slots": [
         209,
         210,
@@ -455,6 +475,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         206,
         306,
@@ -477,6 +498,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2210",
+      "sameSubjectWith": "",
       "slots": [
         203,
         204,
@@ -499,6 +521,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2210",
+      "sameSubjectWith": "",
       "slots": [
         302,
         303,
@@ -521,6 +544,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2210",
+      "sameSubjectWith": "",
       "slots": [
         301,
         302,
@@ -542,6 +566,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         206,
         207,
@@ -563,6 +588,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         203,
         204,
@@ -584,6 +610,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         406,
         407
@@ -608,6 +635,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2213",
+      "sameSubjectWith": "",
       "slots": [
         103,
         104
@@ -628,6 +656,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         509,
         510
@@ -648,6 +677,7 @@
       "taken": true,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         201,
         202
@@ -668,6 +698,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "2216",
+      "sameSubjectWith": "",
       "slots": [
         106,
         107
@@ -688,6 +719,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         401,
         402
@@ -708,6 +740,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         503,
         504
@@ -728,6 +761,7 @@
       "taken": false,
       "myPosition": 0,
       "conflictWith": "",
+      "sameSubjectWith": "",
       "slots": [
         408,
         409

@@ -39,7 +39,7 @@ public class ConsoleUI {
         out.println("===== EnrollFlow：資料結構選課候補模擬器 =====");
         while (true) {
             printStatus();
-            out.println(" A 加選  D 退選  W 排候補  L 取消候補  U 復原  N 下一天  Q 離開");
+            out.println(" C 課程列表  A 加選  D 退選  W 排候補  L 取消候補  U 復原  N 下一天  Q 離開");
             out.print("> ");
             if (!in.hasNextLine()) {
                 return; // 輸入結束（例如管線輸入讀完）
@@ -49,23 +49,27 @@ public class ConsoleUI {
                 continue;
             }
             switch (cmd.charAt(0)) {
+                case 'C':
+                    out.print("關鍵字（直接 Enter 顯示全部）> ");
+                    out.print(system.getCourseListText(in.hasNextLine() ? in.nextLine() : ""));
+                    break;
                 case 'A':
-                    out.println(system.addCourse(askCode()));
+                    show(system.addCourse(askCode()));
                     break;
                 case 'D':
-                    out.println(system.dropCourse(askCode()));
+                    show(system.dropCourse(askCode()));
                     break;
                 case 'W':
-                    out.println(system.joinWaitlist(askCode()));
+                    show(system.joinWaitlist(askCode()));
                     break;
                 case 'L':
-                    out.println(system.leaveWaitlist(askCode()));
+                    show(system.leaveWaitlist(askCode()));
                     break;
                 case 'U':
-                    out.println(system.undo());
+                    show(system.undo());
                     break;
                 case 'N':
-                    out.println(system.nextDay());
+                    show(system.nextDay());
                     break;
                 case 'Q':
                     out.println("再見！");
@@ -73,14 +77,51 @@ public class ConsoleUI {
                 default:
                     out.println("看不懂「" + cmd + "」，請輸入選單上的字母。");
             }
-            // TODO(B): 把回傳的 JSON 解析成中文訊息再印，目前直接印出 JSON 方便除錯
         }
     }
 
-    /** 顯示第幾天與學分。TODO(B)：補上課表與候補順位（樣稿見設計檔第 6 節）。 */
+    /** 顯示天數、學分、已選課程與候補順位。 */
     private void printStatus() {
         out.println("------------------------------------------------");
-        out.println(" 第 " + system.getDay() + " / " + CourseSystem.TOTAL_DAYS + " 天");
+        out.println(system.getStatusText());
+    }
+
+    /**
+     * 印出操作結果。CourseSystem 回傳 JSON，這裡只取出 msg 欄位，前面標成功或失敗。
+     *
+     * @param json 例如 {"ok":true,"msg":"加選成功"}
+     */
+    private void show(String json) {
+        String mark = json.startsWith("{\"ok\":true") ? "[OK] " : "[!!] ";
+        out.println(mark + messageOf(json));
+    }
+
+    /**
+     * 從 JSON 字串取出 msg 欄位並還原跳脫字元。格式固定由 {@link JsonWriter} 產生，所以不需要完整的 JSON 解析器。
+     *
+     * @param json JSON 字串
+     * @return msg 的內容；找不到時回傳原字串
+     */
+    static String messageOf(String json) {
+        String key = "\"msg\":\"";
+        int start = json.indexOf(key);
+        if (start < 0) {
+            return json;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = start + key.length(); i < json.length(); i++) {
+            char c = json.charAt(i);
+            if (c == '"') {
+                break;                                         // 未跳脫的引號就是字串結尾
+            }
+            if (c == '\\' && i + 1 < json.length()) {
+                char n = json.charAt(++i);
+                sb.append(n == 'n' ? '\n' : n);
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 
     /** 詢問課號，轉成大寫。 */

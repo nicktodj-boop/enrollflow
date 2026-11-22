@@ -525,6 +525,7 @@ function renderResult() {
 function courseStatus(c) {
   if (c.taken) return { kind: 'taken', label: '已選' };
   if (c.myPosition > 0) return { kind: 'waiting', label: `候補 #${c.myPosition}` };
+  if (c.sameSubjectWith) return { kind: 'same', label: `同科 ${c.sameSubjectWith}` };
   if (c.conflictWith) return { kind: 'conflict', label: `衝堂 ${c.conflictWith}` };
   if (c.enrolled >= c.capacity) return { kind: 'full', label: `額滿・候補 ${c.waiting} 人` };
   return { kind: 'open', label: '可選' };
@@ -592,6 +593,7 @@ function courseActions(c, status) {
     taken: '已在你的課表上。退選後名額會立刻由候補隊首遞補。',
     waiting: `你在候補第 ${c.myPosition} 位，前面有人被遞補或放棄時會往前移。`,
     conflict: `與 ${c.conflictWith} 時段重疊，加選會被拒絕。`,
+    same: `你已經選了同科目的 ${c.sameSubjectWith}，同一科只能選一班。要換班請先退選 ${c.sameSubjectWith}。`,
     full: `名額已滿，目前 ${c.waiting} 人候補。排候補會加到隊尾。`,
     open: `剩 ${c.capacity - c.enrolled} 個名額。上課時段含助教課。`,
   }[status.kind];
