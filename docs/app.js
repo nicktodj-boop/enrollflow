@@ -721,7 +721,7 @@ function courseActions(c, status) {
     taken: '已在你的課表上。退選後名額會立刻由候補隊首遞補。',
     waiting: `你在候補第 ${c.myPosition} 位，前面有人被遞補或放棄時會往前移。`,
     conflict: `與 ${c.conflictWith} 時段重疊，加選會被拒絕。`,
-    same: `你已經選了同科目的 ${c.sameSubjectWith}，同一科只能選一班。要換班請先退選 ${c.sameSubjectWith}。`,
+    same: `已選同科目的 ${c.sameSubjectWith}，同一科只能選一班，加選會被拒絕。要換班請先退選 ${c.sameSubjectWith}。`,
     full: `名額已滿，目前 ${c.waiting} 人候補。排候補會加到隊尾。`,
     open: `剩 ${c.capacity - c.enrolled} 個名額。上課時段含助教課。`,
   }[status.kind];
@@ -739,7 +739,7 @@ function courseActions(c, status) {
   }
 
   return el('div', { className: 'course-actions' },
-    el('p', { className: 'course-hint' + (status.kind === 'conflict' ? ' is-alert' : ''), text: hint }),
+    el('p', { className: 'course-hint' + (status.kind === 'conflict' || status.kind === 'same' ? ' is-alert' : ''), text: hint }),
     ...buttons);
 }
 
@@ -794,17 +794,21 @@ function renderTimetable() {
     }
   }
 
+  // 預覽：滑鼠停留優先，其次是選取中的課
+  const preview = findCourse(ui.hoverCode || ui.selectedCode);
+  // 造成衝堂或同科目的那門已選課，課表上加紅框，讓玩家看到「是被哪一門擋住」
+  const culprit = preview && !preview.taken ? (preview.sameSubjectWith || preview.conflictWith) : '';
+
   // 已選的課：連續節次畫成一塊
   for (const c of state.courses.filter((x) => x.taken)) {
     for (const run of slotRuns(c.slots)) {
-      nodes.push(place(el('div', { className: 'tt-block', title: `${c.code} ${c.name}（${c.slotLabel}）` },
+      const cls = 'tt-block' + (c.code === culprit ? ' is-culprit' : '');
+      nodes.push(place(el('div', { className: cls, title: `${c.code} ${c.name}（${c.slotLabel}）` },
         el('b', { text: c.code }),
         el('span', { text: c.name })), run.day, run.from, run.len));
     }
   }
 
-  // 預覽：滑鼠停留優先，其次是選取中的課
-  const preview = findCourse(ui.hoverCode || ui.selectedCode);
   if (preview) {
     const occupied = new Set(state.occupied);
     for (const run of slotRuns(preview.slots)) {
@@ -813,8 +817,10 @@ function renderTimetable() {
       for (let i = 0; i < run.len; i++) {
         if (occupied.has(run.day * 100 + run.from + i)) conflict = true;
       }
-      const cls = preview.taken ? 'is-own' : conflict ? 'is-conflict' : '';
-      const label = preview.taken ? '' : conflict ? '衝堂' : preview.code;
+      // 同科目別班雖然時段不一定重疊，一樣加選不了，所以也用警示樣式；時段重疊的那段優先標「衝堂」
+      const same = !!preview.sameSubjectWith;
+      const cls = preview.taken ? 'is-own' : conflict || same ? 'is-conflict' : '';
+      const label = preview.taken ? '' : conflict ? '衝堂' : same ? '同科' : preview.code;
       nodes.push(place(el('div', { className: `tt-preview ${cls}`, text: label, 'aria-hidden': 'true' }),
         run.day, run.from, run.len));
     }

@@ -621,8 +621,8 @@ button, input { font: inherit; color: inherit; }
 .chip-taken { background: var(--ink); color: var(--on-ink); }
 .chip-waiting { background: var(--violet); border-color: var(--violet); color: var(--on-violet); }
 .chip-full { background: var(--violet-soft); border-color: var(--violet-ink); color: var(--violet-ink); }
-.chip-same { border-color: var(--ink-faint); color: var(--ink-muted); background: var(--surface-000); }
-.chip-conflict { background: var(--alert-soft); border-color: var(--alert); color: var(--alert); }
+/* 同科目別班與衝堂一樣是「加選會被拒絕」，用同一組警示色，靠標籤文字區分 */
+.chip-same, .chip-conflict { background: var(--alert-soft); border-color: var(--alert); color: var(--alert); }
 
 /* 選取後展開的操作列 */
 .course-actions {
@@ -704,6 +704,8 @@ button, input { font: inherit; color: inherit; }
   background: repeating-linear-gradient(-45deg, var(--alert-soft) 0 6px, transparent 6px 10px);
   color: var(--alert);
 }
+/* 擋住預覽課程的那門已選課：紅框 */
+.tt-block.is-culprit { outline: var(--border-rule) solid var(--alert); outline-offset: -2px; }
 .tt-preview.is-own { border-color: var(--ink); background: transparent; color: transparent; }
 @keyframes pop-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
 
