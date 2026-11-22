@@ -71,6 +71,7 @@
         <button id="btn-next" class="btn btn-ink" type="button" title="推進一天，模擬同學行動">
           下一天 <span aria-hidden="true">↗</span>
         </button>
+        <button id="btn-rules" class="btn btn-text" type="button" title="選課規則（鍵盤 ?）" aria-haspopup="dialog">規則</button>
         <button id="btn-new" class="btn btn-text" type="button">新局</button>
       </div>
     </header>
@@ -209,6 +210,76 @@
 
     <!-- 遞補通知（設計檔 ⑥）：玩家從候補被補上時，從右上角跳出 -->
     <div id="toasts" class="toasts" aria-live="assertive"></div>
+  </div>
+
+  <!-- ===== 選課規則：每次進入系統先跳出一次，之後按上方「規則」或鍵盤 ? 隨時打開 =====
+       數字（天數、學分上下限、同學人數）開啟時由 app.js 依 Java 的狀態填入，規則改了這裡不必跟著改。 -->
+  <div id="rules" class="rules" hidden>
+    <section class="rules-card" role="dialog" aria-modal="true" aria-labelledby="rules-title">
+      <div class="rules-head">
+        <p class="micro">/MANUAL · ENROLLFLOW 選課規則</p>
+        <button id="btn-rules-x" class="rules-x" type="button" aria-label="關閉規則">×</button>
+      </div>
+      <h2 class="rules-title" id="rules-title">RULES<span class="cursor" aria-hidden="true">_</span></h2>
+      <p class="rules-sub">選課規則：開始前先看一遍，選課中也能按上方「規則」再打開。</p>
+
+      <div class="rules-grid">
+        <section class="rule">
+          <h3 class="rule-title"><span class="num">/01</span>加退選期</h3>
+          <ul>
+            <li>共 <b data-rule="totalDays">10</b> 天，按「下一天」往前推進。</li>
+            <li>你之外還有 <b data-rule="classmates">60</b> 位同學（大二、大三各半），他們每天也會上線加選、排候補、退選。</li>
+          </ul>
+        </section>
+        <section class="rule">
+          <h3 class="rule-title"><span class="num">/02</span>學分</h3>
+          <ul>
+            <li>每人學分要在 <b data-rule="minCredits">10</b>–<b data-rule="maxCredits">16</b> 之間。</li>
+            <li>加選後超過 <b data-rule="maxCredits">16</b> 學分會被擋下。</li>
+            <li class="rule-alert">第 <b data-rule="totalDays">10</b> 天結束時低於 <b data-rule="minCredits">10</b> 學分就失敗，系統會要求你申請休學。</li>
+          </ul>
+        </section>
+        <section class="rule">
+          <h3 class="rule-title"><span class="num">/03</span>加選</h3>
+          <ul>
+            <li>不能衝堂，助教課的時段也算。</li>
+            <li>同一門課不能重複選。</li>
+            <li>同一科只能選一班，例如選了經濟學 A，就不能再選 B 或 C。</li>
+            <li>有名額就直接選上；額滿時可以排候補。</li>
+          </ul>
+        </section>
+        <section class="rule">
+          <h3 class="rule-title"><span class="num">/04</span>候補 · Queue</h3>
+          <ul>
+            <li>只有額滿的課能排候補，排在隊伍最後面。</li>
+            <li>先排先補：有人退選，系統會立刻從隊伍最前面開始遞補。</li>
+            <li><strong>排第一位不保證選上。</strong>輪到你的時候，如果衝堂、學分已滿或已選同科目別班，你會被移出候補，名額交給下一位。</li>
+            <li>取消候補後，後面的人往前一位。</li>
+          </ul>
+        </section>
+        <section class="rule">
+          <h3 class="rule-title"><span class="num">/05</span>復原 · Stack</h3>
+          <ul>
+            <li>只能復原自己的操作，最多 10 步。</li>
+            <li>退選後名額已被候補補走，復原時會改成幫你排候補。</li>
+            <li>取消候補後再復原，只能重新排到隊伍最後面，原本的順位拿不回來。</li>
+            <li>按「下一天」後，前一天的操作就不能再復原。</li>
+          </ul>
+        </section>
+        <section class="rule">
+          <h3 class="rule-title"><span class="num">/06</span>操作方式</h3>
+          <ul>
+            <li>點課程會出現加選、退選、排候補等按鈕。</li>
+            <li>滑鼠停在課程上，可以在週課表預覽它的時段。</li>
+            <li>鍵盤：<kbd>U</kbd> 復原、<kbd>?</kbd> 打開規則、<kbd>Esc</kbd> 關閉。</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="rules-actions">
+        <button id="btn-rules-ok" class="btn btn-violet" type="button">開始選課 <span aria-hidden="true">↗</span></button>
+      </div>
+    </section>
   </div>
 
   <script src="app.js"></script>

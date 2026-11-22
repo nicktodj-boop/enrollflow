@@ -334,6 +334,48 @@ async function bootFinish() {
     app.classList.add('is-enter');
     setTimeout(() => app.classList.remove('is-enter'), 900);
   }
+  // 每次進入系統都先看規則：等主畫面浮現得差不多再跳出
+  setTimeout(() => openRules($('btn-rules')), REDUCED_MOTION ? 0 : 650);
+}
+
+// ------------------------------------------------------------
+// 選課規則彈窗
+// ------------------------------------------------------------
+
+/** 關閉後要把焦點還給誰（通常是上方的「規則」按鈕）。 */
+let rulesReturnFocus = null;
+
+/**
+ * 打開規則彈窗。規則裡的數字從 Java 的狀態填入，規則改了文字會跟著變。
+ * 開著時主畫面設成 inert：滑鼠點不到、Tab 也跳不進去，焦點只在彈窗裡。
+ * @param {HTMLElement} [returnTo] 關閉後焦點回到哪個元素
+ */
+function openRules(returnTo) {
+  if (state) {
+    const values = {
+      totalDays: state.totalDays,
+      classmates: state.studentCount - 1,   // 扣掉玩家自己
+      minCredits: state.minCredits,
+      maxCredits: state.maxCredits,
+    };
+    for (const b of document.querySelectorAll('#rules [data-rule]')) {
+      if (values[b.dataset.rule] !== undefined) b.textContent = values[b.dataset.rule];
+    }
+  }
+  rulesReturnFocus = returnTo || null;
+  $('rules').hidden = false;
+  $('app').inert = true;
+  // 焦點放在「開始選課」，但不要因此捲到彈窗底部（手機上會跳過前面的規則）
+  $('rules').scrollTop = 0;
+  $('btn-rules-ok').focus({ preventScroll: true });
+}
+
+/** 關閉規則彈窗，焦點還給打開它的按鈕。 */
+function closeRules() {
+  if ($('rules').hidden) return;
+  $('rules').hidden = true;
+  $('app').inert = false;
+  if (rulesReturnFocus) rulesReturnFocus.focus();
 }
 
 /** 載入失敗：停止動畫、進度格改成警示色、顯示原因與排除方法。 */
@@ -352,6 +394,11 @@ function bindEvents() {
   $('btn-undo').addEventListener('click', () => callJava('undo', () => system.undo()));
   $('btn-next').addEventListener('click', () => callJava('nextDay', () => system.nextDay()));
   $('btn-new').addEventListener('click', newGame);
+  $('btn-rules').addEventListener('click', () => openRules($('btn-rules')));
+  $('btn-rules-ok').addEventListener('click', closeRules);
+  $('btn-rules-x').addEventListener('click', closeRules);
+  // 點彈窗外的半透明背景也能關閉
+  $('rules').addEventListener('click', (e) => { if (e.target === $('rules')) closeRules(); });
   $('btn-again').addEventListener('click', newGame);
   $('btn-fail-again').addEventListener('click', newGame);
   $('btn-fail-close').addEventListener('click', closeFail);
@@ -382,6 +429,15 @@ function bindEvents() {
 
   // 快捷鍵 U = 復原（上方列按鈕上標示的那個鍵）；正在輸入文字時不觸發
   document.addEventListener('keydown', (e) => {
+    // 規則彈窗開著時，只處理 Esc，其他快捷鍵先不動作
+    if (!$('rules').hidden) {
+      if (e.key === 'Escape') closeRules();
+      return;
+    }
+    if (e.key === '?' && !(e.target instanceof HTMLInputElement)) {
+      openRules($('btn-rules'));
+      return;
+    }
     if (e.key === 'Escape' && !$('fail').hidden) {
       closeFail();
       return;
@@ -470,7 +526,8 @@ function showMessage(text, ok, action = null) {
 
 function setButtonsDisabled(disabled) {
   for (const btn of document.querySelectorAll('#app button')) {
-    if (btn.closest('#weekday-filter, #grade-filter') || btn.classList.contains('toast-close')) continue;
+    // 篩選、通知關閉鈕、規則鈕不需要 Java，呼叫進行中也能按
+    if (btn.closest('#weekday-filter, #grade-filter') || btn.classList.contains('toast-close') || btn.id === 'btn-rules') continue;
     btn.disabled = disabled;
   }
 }

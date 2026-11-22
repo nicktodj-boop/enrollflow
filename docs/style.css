@@ -441,6 +441,80 @@ button, input { font: inherit; color: inherit; }
   to { opacity: 1; transform: none; }
 }
 
+/* ===================== 選課規則彈窗 ===================== */
+/* 放在 #app 外面：不受主畫面進場動畫影響，Java 呼叫中也不會被停用 */
+.rules {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: var(--space-6) max(16px, env(safe-area-inset-left, 0px));
+  background: color-mix(in srgb, var(--surface-000) 60%, transparent);
+  overflow-y: auto;
+  animation: fail-fade 160ms steps(4) both;
+}
+.rules-card {
+  width: min(880px, 100%);
+  background: var(--surface-100);
+  border: var(--border-rule) solid var(--ink);
+  border-top: 10px solid var(--violet);
+  padding: var(--space-8);
+  animation: fail-drop 320ms steps(6) both;
+}
+.rules-head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); }
+.rules-x {
+  width: 32px; height: 32px;
+  border: var(--border-hair) solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.rules-x:hover { border-color: var(--ink); }
+.rules-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(56px, 12vw, 88px);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  margin: var(--space-3) 0 0;
+}
+.rules-sub { margin: var(--space-2) 0 var(--space-6); color: var(--ink-muted); font-size: 13px; }
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  border-top: var(--border-rule) solid var(--ink);
+}
+.rule { padding: var(--space-4) var(--space-4) var(--space-4) 0; border-bottom: var(--border-hair) solid var(--line); }
+.rule-title { margin: 0 0 var(--space-2); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+.rule-title .num { color: var(--violet-ink); margin-right: var(--space-2); }
+.rule ul { margin: 0; padding-left: 1.2em; font-size: 13px; line-height: 1.75; }
+.rule li::marker { color: var(--ink-faint); }
+.rule b { font-family: var(--font-num); font-weight: 600; font-size: 15px; color: var(--violet-ink); }
+.rule strong { color: var(--violet-ink); }
+.rule-alert { color: var(--alert); }
+.rule-alert b { color: var(--alert); }
+.rule kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0 4px;
+  border: var(--border-hair) solid var(--ink);
+  font: inherit;
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.5;
+}
+.rules-actions { display: flex; justify-content: flex-end; margin-top: var(--space-6); }
+@media (max-width: 600px) {
+  .rules { padding-block: var(--space-4); }
+  .rules-card { padding: var(--space-6) var(--space-4); }
+  .rule { padding-right: 0; }
+}
+
 /* 主網格：課程列表｜週課表｜側欄；面板之間用 1px 線、不留縫 */
 .grid {
   flex: 1;
