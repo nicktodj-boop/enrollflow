@@ -118,7 +118,7 @@ async function start() {
     if (DEMO) {
       // 示範模式不載入 Java，但仍然把整段載入動畫播完（約 3 秒），方便錄影與展示
       setBootStep(1, '示範模式：讀取 demo-state.json，不載入 Java。');
-      const [response] = await Promise.all([fetch('demo-state.json'), sleep(1300)]);
+      const [response] = await Promise.all([fetch('demo-state.json', { cache: 'no-cache' }), sleep(1300)]);
       state = await response.json();
       setBootStep(2);
       await sleep(800);
