@@ -932,6 +932,8 @@ function detectFilled() {
 
 /** 右上角跳出通知，8 秒後自動消失，也可以手動關閉。 */
 function showToast(title, text) {
+  // 通知放在訊息列下方，不蓋住上方列的「下一天」「規則」等按鈕；頁面捲下去、上方列看不到時才貼齊頂端
+  $('toasts').style.top = Math.max(16, $('message').getBoundingClientRect().bottom + 8) + 'px';
   const toast = el('div', { className: 'toast', role: 'status' },
     el('span', { className: 'toast-icon', 'aria-hidden': 'true', text: '↗' }),
     el('div', {},
