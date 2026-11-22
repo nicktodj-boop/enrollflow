@@ -429,14 +429,31 @@ function bindEvents() {
 
   // 快捷鍵 U = 復原（上方列按鈕上標示的那個鍵）；正在輸入文字時不觸發
   document.addEventListener('keydown', (e) => {
-    // 規則彈窗開著時，只處理 Esc，其他快捷鍵先不動作
-    if (!$('rules').hidden) {
-      if (e.key === 'Escape') closeRules();
-      return;
+    // Esc 一律擋掉瀏覽器預設動作：Chrome 的 Esc 等於「停止載入」，會中斷 CheerpJ 在背景使用的連線，
+    // 之後所有 Java 呼叫都不會回來，整個系統卡死（2026-11-22 用真實按鍵實測重現）。
+    // 擋掉之後搜尋框不會自己清空，所以這裡手動清。
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      if (e.target === $('search') && e.target.value) {
+        e.target.value = '';
+        ui.keyword = '';
+        renderCourses();
+      }
     }
     // 快捷鍵用 e.code（實體按鍵位置）判斷，不用 e.key（打出來的字）：
-    // 開著注音輸入法時，U 鍵的 e.key 會是「ㄧ」或「Process」，Shift + / 會是「？」，用 e.key 會比對不到
-    if ((e.key === '?' || (e.code === 'Slash' && e.shiftKey)) && !(e.target instanceof HTMLInputElement)) {
+    // 開著注音輸入法時，U 鍵的 e.key 會是「ㄧ」或「Process」，用 e.key 會比對不到
+    const typing = e.target instanceof HTMLInputElement;
+    const plain = !typing && !e.metaKey && !e.ctrlKey && !e.altKey;   // 避開 Cmd+R 重新整理等組合鍵
+    const isKey = (letter) => e.code === 'Key' + letter || e.key.toUpperCase() === letter;
+    // R 打開／關閉規則；? 也可以（不少網站用 ?，但要按 Shift，所以主要用 R）
+    const rulesKey = plain && (isKey('R') || e.key === '?' || (e.code === 'Slash' && e.shiftKey));
+
+    // 規則彈窗開著時，只處理關閉，其他快捷鍵先不動作
+    if (!$('rules').hidden) {
+      if (e.key === 'Escape' || rulesKey) closeRules();
+      return;
+    }
+    if (rulesKey) {
       openRules($('btn-rules'));
       return;
     }
@@ -444,8 +461,7 @@ function bindEvents() {
       closeFail();
       return;
     }
-    const typing = e.target instanceof HTMLInputElement;
-    if (!typing && !e.metaKey && !e.ctrlKey && !e.altKey && (e.code === 'KeyU' || e.key === 'u' || e.key === 'U')) {
+    if (plain && isKey('U')) {
       // 不看按鈕是否停用，直接交給 Java：堆疊空了也會回「沒有可以復原的操作」，按了才有反應
       callJava('undo', () => system.undo());
     }
