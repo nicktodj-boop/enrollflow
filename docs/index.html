@@ -21,7 +21,7 @@
   <section id="loading" class="boot">
     <div class="boot-inner" id="boot-card">
       <div class="boot-head">
-        <p class="micro">/BOOT · DATA STRUCTURES FINAL · GROUP 07</p>
+        <p class="micro">DATA STRUCTURES FINAL</p>
         <p class="micro boot-clock" id="boot-clock" aria-hidden="true">T+00:00.0</p>
       </div>
       <!-- 標題逐字打出、停一下、刪掉再重打，一直循環到載入完成（app.js 的 typeTitleLoop） -->
@@ -48,7 +48,7 @@
     <header class="topbar">
       <div class="brand">
         <span class="brand-name">ENROLLFLOW</span>
-        <span class="brand-sub">/ 115-1 加退選模擬</span>
+        <span class="brand-sub">115-1 加退選模擬</span>
         <span id="demo-tag" class="demo-tag" hidden>DEMO DATA · 示範資料</span>
       </div>
 
@@ -97,7 +97,7 @@
     <div id="fail" class="fail" hidden>
       <section class="fail-card" role="alertdialog" aria-modal="true" aria-labelledby="fail-title" aria-describedby="fail-text">
         <div class="fail-head">
-          <p class="micro">/ENROLL_RESULT · ERR_MIN_CREDITS</p>
+          <p class="micro">ENROLL_RESULT · ERR_MIN_CREDITS</p>
           <p class="micro fail-exit">EXIT 1</p>
         </div>
         <h2 class="fail-title" id="fail-title">FAILED<span class="cursor" aria-hidden="true">_</span></h2>
@@ -126,7 +126,7 @@
     <main class="grid">
       <!-- ===== ② 課程列表 ===== -->
       <section class="panel panel-courses" aria-labelledby="h-courses">
-        <h2 class="section-label" id="h-courses"><span class="num">/01</span>課程列表</h2>
+        <h2 class="section-label" id="h-courses"><span class="num">01</span>課程列表</h2>
         <div class="filters">
           <label class="search">
             <span class="visually-hidden">搜尋課號或課名</span>
@@ -152,7 +152,7 @@
 
       <!-- ===== ③ 週課表 ===== -->
       <section class="panel panel-timetable" aria-labelledby="h-timetable">
-        <h2 class="section-label" id="h-timetable"><span class="num">/02</span>週課表</h2>
+        <h2 class="section-label" id="h-timetable"><span class="num">02</span>週課表</h2>
         <div class="timetable-scroll">
           <div id="timetable" class="timetable" role="grid" aria-label="我的週課表，星期一到五，第 1 到 10 節"></div>
         </div>
@@ -167,12 +167,12 @@
       <!-- ===== ④ 我的候補與操作紀錄 ===== -->
       <aside class="panel panel-side">
         <section aria-labelledby="h-wait">
-          <h2 class="section-label" id="h-wait"><span class="num">/03</span>我的候補</h2>
+          <h2 class="section-label" id="h-wait"><span class="num">03</span>我的候補</h2>
           <ul id="my-waits" class="my-waits"></ul>
           <p id="wait-empty" class="empty">目前沒有排候補。額滿的課可以按「排候補」加入隊尾。</p>
         </section>
         <section aria-labelledby="h-log">
-          <h2 class="section-label" id="h-log"><span class="num">/04</span>操作紀錄</h2>
+          <h2 class="section-label" id="h-log"><span class="num">04</span>操作紀錄</h2>
           <ol id="log" class="log"></ol>
         </section>
       </aside>
@@ -181,7 +181,7 @@
     <!-- ===== ⑤ 資料結構透視面板（可收合）：把每次操作背後的 Queue / Stack / Set 畫出來 ===== -->
     <details class="inspector" id="inspector" open>
       <summary class="inspector-summary">
-        <span class="section-label"><span class="num">/05</span>資料結構透視面板</span>
+        <span class="section-label"><span class="num">05</span>資料結構透視面板</span>
         <span class="last-op">LAST OP <code id="last-op">尚無操作</code></span>
       </summary>
       <div class="inspector-grid">
@@ -206,7 +206,6 @@
     <footer class="statusbar">
       <span><i class="dot"></i><span id="status-text">JAVA ONLINE</span></span>
       <span>STUDENTS <b id="student-count">16</b></span>
-      <span>UNDO <b id="undo-size">0</b>/10</span>
       <span class="statusbar-right">DATA STRUCTURES · 115-1 · GROUP 07</span>
     </footer>
 
@@ -219,7 +218,7 @@
   <div id="rules" class="rules" hidden>
     <section class="rules-card" role="dialog" aria-modal="true" aria-labelledby="rules-title">
       <div class="rules-head">
-        <p class="micro">/MANUAL · ENROLLFLOW 選課規則</p>
+        <p class="micro">MANUAL · ENROLLFLOW 選課規則</p>
         <button id="btn-rules-x" class="rules-x" type="button" aria-label="關閉規則">×</button>
       </div>
       <h2 class="rules-title" id="rules-title">RULES<span class="cursor" aria-hidden="true">_</span></h2>
@@ -227,14 +226,14 @@
 
       <div class="rules-grid">
         <section class="rule">
-          <h3 class="rule-title"><span class="num">/01</span>加退選期</h3>
+          <h3 class="rule-title"><span class="num">01</span>加退選期</h3>
           <ul>
             <li>共 <b data-rule="totalDays">10</b> 天，按「下一天」往前推進。</li>
             <li>你之外還有 <b data-rule="classmates">60</b> 位同學（大二、大三各半），他們每天也會上線加選、排候補、退選。</li>
           </ul>
         </section>
         <section class="rule">
-          <h3 class="rule-title"><span class="num">/02</span>學分</h3>
+          <h3 class="rule-title"><span class="num">02</span>學分</h3>
           <ul>
             <li>每人學分要在 <b data-rule="minCredits">10</b>–<b data-rule="maxCredits">16</b> 之間。</li>
             <li>加選後超過 <b data-rule="maxCredits">16</b> 學分會被擋下。</li>
@@ -242,7 +241,7 @@
           </ul>
         </section>
         <section class="rule">
-          <h3 class="rule-title"><span class="num">/03</span>加選</h3>
+          <h3 class="rule-title"><span class="num">03</span>加選</h3>
           <ul>
             <li>不能衝堂，助教課的時段也算。</li>
             <li>同一門課不能重複選。</li>
@@ -251,7 +250,7 @@
           </ul>
         </section>
         <section class="rule">
-          <h3 class="rule-title"><span class="num">/04</span>候補 · Queue</h3>
+          <h3 class="rule-title"><span class="num">04</span>候補 · Queue</h3>
           <ul>
             <li>只有額滿的課能排候補，排在隊伍最後面。</li>
             <li>先排先補：有人退選，系統會立刻從隊伍最前面開始遞補。</li>
@@ -260,7 +259,7 @@
           </ul>
         </section>
         <section class="rule">
-          <h3 class="rule-title"><span class="num">/05</span>復原 · Stack</h3>
+          <h3 class="rule-title"><span class="num">05</span>復原 · Stack</h3>
           <ul>
             <li>只能復原自己的操作，最多 10 步。</li>
             <li>退選後名額已被候補補走，復原時會改成幫你排候補。</li>
@@ -269,7 +268,7 @@
           </ul>
         </section>
         <section class="rule">
-          <h3 class="rule-title"><span class="num">/06</span>操作方式</h3>
+          <h3 class="rule-title"><span class="num">06</span>操作方式</h3>
           <ul>
             <li>點課程會出現加選、退選、排候補等按鈕。</li>
             <li>滑鼠停在課程上，可以在週課表預覽它的時段。</li>
@@ -284,6 +283,6 @@
     </section>
   </div>
 
-  <script src="app.js?v=a881c39e"></script>
+  <script src="app.js?v=9147aac4"></script>
 </body>
 </html>

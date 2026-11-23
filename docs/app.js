@@ -910,7 +910,6 @@ function renderInspector() {
 /** 頁尾狀態列。 */
 function renderStatusbar() {
   $('student-count').textContent = state.studentCount;
-  $('undo-size').textContent = state.undoSize;
 }
 
 // ------------------------------------------------------------
