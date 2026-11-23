@@ -34,7 +34,8 @@
   --font-display: "Bebas Neue", "Oswald", "Arial Narrow", "PingFang TC", "Microsoft JhengHei", sans-serif;
   /* 大數字（天數、學分、順位、百分比）：方角數位字，跟主標的 Bebas 分開 */
   --font-num: "Chakra Petch", "JetBrains Mono", ui-monospace, monospace;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", monospace;
+  /* 第一個字型只含 0–9（index.html 用 text= 載入），其餘字元自動落到 JetBrains Mono */
+  --font-mono: "Azeret Mono", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", monospace;
 
   --space-1: 4px;
   --space-2: 8px;
