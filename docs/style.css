@@ -18,7 +18,7 @@
   --surface-100: #f7f7f8;
   --ink: #0a0a0a;
   --ink-muted: #45454e;    /* 小字：surface-000 上約 8.1:1 */
-  --ink-faint: #62626b;    /* 次要小字：約 5.2:1，仍過 WCAG AA */
+  --ink-faint: #62626b;    /* 只用在虛線、外框；小字一律用 ink-muted，不分深淺 */
   --line: #cfcfd6;
   --on-ink: #ffffff;
   --violet: #7b4dff;
@@ -190,9 +190,9 @@ button, input { font: inherit; color: inherit; }
   gap: var(--space-2);
   padding: var(--space-2) 0;
   border-top: var(--border-hair) solid var(--line);
-  color: var(--ink-faint);
+  color: var(--ink-muted);
 }
-.boot-steps li::before { content: "[    ]"; white-space: pre; color: var(--ink-faint); }
+.boot-steps li::before { content: "[    ]"; white-space: pre; color: var(--ink-muted); }
 .step-time { font-size: 10px; letter-spacing: 0.08em; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 
 /* 進行中：標記閃爍、文字像終端機一樣逐字打出 */
@@ -421,7 +421,7 @@ button, input { font: inherit; color: inherit; }
 .fail-label { font-size: 11px; letter-spacing: 0.08em; color: var(--ink-muted); }
 .fail-num { font-family: var(--font-num); font-weight: 600; font-size: 56px; line-height: 0.9; color: var(--alert); font-variant-numeric: tabular-nums; }
 .fail-num-min { color: var(--ink); }
-.fail-vs { font-family: var(--font-num); font-size: 40px; line-height: 1; color: var(--ink-faint); padding-bottom: 4px; }
+.fail-vs { font-family: var(--font-num); font-size: 40px; line-height: 1; color: var(--ink-muted); padding-bottom: 4px; }
 
 .fail-bar { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 2px; height: 18px; margin: var(--space-6) 0 var(--space-2); }
 .fail-bar i { background: var(--line); }
@@ -493,7 +493,7 @@ button, input { font: inherit; color: inherit; }
 .rule-title { margin: 0 0 var(--space-2); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
 .rule-title .num { color: var(--violet-ink); margin-right: var(--space-2); }
 .rule ul { margin: 0; padding-left: 1.2em; font-size: 13px; line-height: 1.75; }
-.rule li::marker { color: var(--ink-faint); }
+.rule li::marker { color: var(--ink-muted); }
 .rule b { font-family: var(--font-num); font-weight: 600; font-size: 15px; color: var(--violet-ink); }
 .rule strong { color: var(--violet-ink); }
 .rule-alert { color: var(--alert); }
@@ -663,7 +663,7 @@ button, input { font: inherit; color: inherit; }
   right: 3px; bottom: -1px;
   font-size: 10px;
   line-height: 1;
-  color: var(--ink-faint);
+  color: var(--ink-muted);
 }
 
 /* 已選的課：ink 實心方塊，連續節次合併成一塊 */
@@ -757,7 +757,7 @@ button, input { font: inherit; color: inherit; }
 .log { list-style: none; margin: 0; padding: 0; border-top: var(--border-rule) solid var(--ink); font-size: 12px; }
 .log li { padding: var(--space-2) 0; border-bottom: var(--border-hair) solid var(--line); color: var(--ink-muted); }
 .log li:first-child { color: var(--ink); }
-.log li::before { content: attr(data-index); display: inline-block; min-width: 2.6em; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.08em; }
+.log li::before { content: attr(data-index); display: inline-block; min-width: 2.6em; color: var(--ink-muted); font-size: 10px; letter-spacing: 0.08em; }
 
 /* ===================== ⑤ 資料結構透視面板 ===================== */
 .inspector { background: var(--surface-100); border-bottom: var(--border-hair) solid var(--line); }
