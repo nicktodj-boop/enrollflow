@@ -45,6 +45,12 @@
   --space-8: 32px;
   --space-12: 48px;
 
+  /* 版面寬度：內容最寬 1520px 置中，兩側留白跟著螢幕變寬；左右至少 16px，並讓開瀏海與圓角 */
+  --container: 1520px;
+  --gutter-left: max(var(--space-4), env(safe-area-inset-left, 0px), (100% - var(--container)) / 2);
+  --gutter-right: max(var(--space-4), env(safe-area-inset-right, 0px), (100% - var(--container)) / 2);
+  --gutter-cap: max(0px, (100% - var(--container)) / 2);  /* 面板自己有內距時，只補超出寬度的部分 */
+
   --border-hair: 1px;
   --border-rule: 2px;
 
@@ -78,7 +84,7 @@
 /* 讓 hidden 屬性一定生效（否則 display:flex / grid 會蓋過它） */
 [hidden] { display: none !important; }
 
-html, body { height: 100%; }
+html, body { height: 100%; overflow-x: clip; }  /* 任何寬度都不出現橫向捲軸 */
 
 body {
   margin: 0;
@@ -130,6 +136,7 @@ button, input { font: inherit; color: inherit; }
   transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
 }
 .btn:disabled { cursor: not-allowed; opacity: 0.4; }
+.btn:not(:disabled):active { transform: translateY(1px); }  /* 按下的瞬間回饋（不做動畫，直接位移 1px） */
 .btn-ink { background: var(--ink); color: var(--on-ink); }
 .btn-ink:not(:disabled):hover { background: var(--violet); border-color: var(--violet); color: var(--on-violet); }
 .btn-ghost:not(:disabled):hover { background: var(--ink); color: var(--on-ink); }
@@ -152,7 +159,7 @@ button, input { font: inherit; color: inherit; }
   min-height: 100%;
   display: grid;
   place-items: center;
-  padding: var(--space-12) max(16px, env(safe-area-inset-left, 0px));
+  padding: var(--space-12) max(var(--space-4), env(safe-area-inset-left, 0px));
   background:
     linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 32px 32px,
     linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 32px 32px,
@@ -278,8 +285,8 @@ button, input { font: inherit; color: inherit; }
   gap: 0;
   background: var(--surface-100);
   border-bottom: var(--border-rule) solid var(--ink);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-left: var(--gutter-left);
+  padding-right: var(--gutter-right);
 }
 .topbar > * { padding-block: var(--space-3); }
 
@@ -350,8 +357,8 @@ button, input { font: inherit; color: inherit; }
   gap: var(--space-2) var(--space-3);
   min-height: 44px;
   padding-block: var(--space-2);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-left: var(--gutter-left);
+  padding-right: var(--gutter-right);
   border-bottom: var(--border-hair) solid var(--line);
   font-size: 13px;
 }
@@ -368,8 +375,8 @@ button, input { font: inherit; color: inherit; }
   align-items: center;
   gap: var(--space-4) var(--space-8);
   padding-block: var(--space-6);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-left: var(--gutter-left);
+  padding-right: var(--gutter-right);
   background: var(--ink);
   color: var(--on-ink);
 }
@@ -387,7 +394,7 @@ button, input { font: inherit; color: inherit; }
   z-index: 50;
   display: grid;
   place-items: center;
-  padding: var(--space-6) max(16px, env(safe-area-inset-left, 0px));
+  padding: var(--space-6) max(var(--space-4), env(safe-area-inset-left, 0px));
   background: color-mix(in srgb, var(--surface-000) 55%, transparent);
   backdrop-filter: grayscale(1);
   -webkit-backdrop-filter: grayscale(1);
@@ -421,7 +428,7 @@ button, input { font: inherit; color: inherit; }
 .fail-label { font-size: 11px; letter-spacing: 0.08em; color: var(--ink-muted); }
 .fail-num { font-family: var(--font-num); font-weight: 600; font-size: 56px; line-height: 0.9; color: var(--alert); font-variant-numeric: tabular-nums; }
 .fail-num-min { color: var(--ink); }
-.fail-vs { font-family: var(--font-num); font-size: 40px; line-height: 1; color: var(--ink-muted); padding-bottom: 4px; }
+.fail-vs { font-family: var(--font-num); font-size: 40px; line-height: 1; color: var(--ink-muted); padding-bottom: var(--space-1); }
 
 .fail-bar { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 2px; height: 18px; margin: var(--space-6) 0 var(--space-2); }
 .fail-bar i { background: var(--line); }
@@ -449,7 +456,7 @@ button, input { font: inherit; color: inherit; }
   z-index: 60;
   display: grid;
   place-items: center;
-  padding: var(--space-6) max(16px, env(safe-area-inset-left, 0px));
+  padding: var(--space-6) max(var(--space-4), env(safe-area-inset-left, 0px));
   background: color-mix(in srgb, var(--surface-000) 60%, transparent);
   overflow-y: auto;
   animation: fail-fade 160ms steps(4) both;
@@ -501,7 +508,7 @@ button, input { font: inherit; color: inherit; }
 .rule kbd {
   display: inline-block;
   min-width: 1.6em;
-  padding: 0 4px;
+  padding: 0 var(--space-1);
   border: var(--border-hair) solid var(--ink);
   font: inherit;
   font-size: 11px;
@@ -520,6 +527,7 @@ button, input { font: inherit; color: inherit; }
   flex: 1;
   display: grid;
   grid-template-columns: minmax(300px, 380px) minmax(0, 1fr) minmax(240px, 300px);
+  padding-inline: var(--gutter-cap);
   border-bottom: var(--border-hair) solid var(--line);
 }
 .panel {
@@ -596,7 +604,7 @@ button, input { font: inherit; color: inherit; }
 .course-meta { grid-column: 1; font-size: 11px; color: var(--ink-muted); letter-spacing: 0.02em; }
 /* 每一段（年級、教師、學分、時段）不從中間斷行，要換行就整段換 */
 .course-meta span { white-space: nowrap; }
-.course-meta span + span::before { content: " · "; }
+.course-meta span + span { margin-left: var(--space-3); }  /* 用間距分開，不用中點 */
 .course-seats {
   grid-column: 2;
   grid-row: 2;
@@ -768,8 +776,8 @@ button, input { font: inherit; color: inherit; }
   justify-content: space-between;
   gap: var(--space-2) var(--space-6);
   padding-block: var(--space-4);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-left: var(--gutter-left);
+  padding-right: var(--gutter-right);
   cursor: pointer;
   list-style: none;
   border-bottom: var(--border-hair) solid var(--line);
@@ -793,6 +801,7 @@ button, input { font: inherit; color: inherit; }
 
 .inspector-grid {
   display: grid;
+  padding-inline: var(--gutter-cap);
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
 }
 .inspect {
@@ -864,8 +873,8 @@ button, input { font: inherit; color: inherit; }
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-6);
   padding-block: var(--space-2);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-left: var(--gutter-left);
+  padding-right: var(--gutter-right);
   background: var(--ink);
   color: var(--on-ink);
   font-size: 10px;
@@ -878,11 +887,11 @@ button, input { font: inherit; color: inherit; }
 .toasts {
   position: fixed;
   top: calc(var(--space-4) + env(safe-area-inset-top, 0px));
-  right: max(16px, env(safe-area-inset-right, 0px));
+  right: max(var(--space-4), env(safe-area-inset-right, 0px));
   z-index: 20;
   display: grid;
   gap: var(--space-2);
-  width: min(340px, calc(100vw - 32px));
+  width: min(340px, calc(100% - 2 * var(--space-4)));
 }
 .toast {
   display: grid;
@@ -923,11 +932,11 @@ button, input { font: inherit; color: inherit; }
   .actions { flex-basis: 100%; padding-left: 0; border-left: 0; border-top: var(--border-hair) solid var(--line); }
   .actions .btn-ink { margin-left: auto; }
   .grid { grid-template-columns: minmax(0, 1fr); }
-  .panel { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+  .panel { padding-inline: max(var(--space-4), env(safe-area-inset-left, 0px)); }
   .panel + .panel { border-left: 0; border-top: var(--border-hair) solid var(--line); }
   .panel-side { flex-direction: column; }
   .inspector-grid { grid-template-columns: minmax(0, 1fr); }
-  .inspect { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+  .inspect { padding-inline: max(var(--space-4), env(safe-area-inset-left, 0px)); }
   .inspect + .inspect { border-left: 0; border-top: var(--border-hair) solid var(--line); }
   .statusbar-right { margin-left: 0; }
 }

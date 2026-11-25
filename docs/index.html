@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chakra+Petch:wght@600&family=JetBrains+Mono:wght@400;500;700&display=swap">
   <!-- 只取 Azeret Mono 的 0–9：JetBrains Mono 的 0 中間有點，數字改用這套沒點的 0 -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;700&text=0123456789&display=swap">
-  <link rel="stylesheet" href="style.css?v=42b6166b">
+  <link rel="stylesheet" href="style.css?v=796059c7">
   <!-- CheerpJ 3：在瀏覽器裡執行 Java（課程 W04 教材做法）。示範模式 (?demo) 不會用到它。 -->
   <script src="https://cjrtnc.leaningtech.com/3.0/cj3loader.js"></script>
 </head>
@@ -51,7 +51,7 @@
       <div class="brand">
         <span class="brand-name">ENROLLFLOW</span>
         <span class="brand-sub">115-1 加退選模擬</span>
-        <span id="demo-tag" class="demo-tag" hidden>DEMO DATA · 示範資料</span>
+        <span id="demo-tag" class="demo-tag" hidden>DEMO DATA 示範資料</span>
       </div>
 
       <div class="meter" aria-label="加退選天數">
@@ -99,7 +99,7 @@
     <div id="fail" class="fail" hidden>
       <section class="fail-card" role="alertdialog" aria-modal="true" aria-labelledby="fail-title" aria-describedby="fail-text">
         <div class="fail-head">
-          <p class="micro">ENROLL_RESULT · ERR_MIN_CREDITS</p>
+          <p class="micro">ENROLL_RESULT: ERR_MIN_CREDITS</p>
           <p class="micro fail-exit">EXIT 1</p>
         </div>
         <h2 class="fail-title" id="fail-title">FAILED<span class="cursor" aria-hidden="true">_</span></h2>
@@ -188,17 +188,17 @@
       </summary>
       <div class="inspector-grid">
         <section class="inspect inspect-queue" aria-labelledby="h-queue">
-          <h3 id="h-queue" class="inspect-title">QUEUE · 候補佇列 <span id="queue-course" class="inspect-meta"></span></h3>
+          <h3 id="h-queue" class="inspect-title">QUEUE 候補佇列 <span id="queue-course" class="inspect-meta"></span></h3>
           <div id="queue-view" class="queue-view"></div>
           <p class="inspect-note">先進先出：有人退選時，從 front 端 poll() 遞補。</p>
         </section>
         <section class="inspect inspect-stack" aria-labelledby="h-stack">
-          <h3 id="h-stack" class="inspect-title">STACK · 復原堆疊 <span id="stack-size" class="inspect-meta"></span></h3>
+          <h3 id="h-stack" class="inspect-title">STACK 復原堆疊 <span id="stack-size" class="inspect-meta"></span></h3>
           <ol id="stack-view" class="stack-view"></ol>
           <p class="inspect-note">後進先出：按「復原」會 pop() 最上面那筆。</p>
         </section>
         <section class="inspect inspect-set" aria-labelledby="h-set">
-          <h3 id="h-set" class="inspect-title">SET · 已佔時段 <span id="set-size" class="inspect-meta"></span></h3>
+          <h3 id="h-set" class="inspect-title">SET 已佔時段 <span id="set-size" class="inspect-meta"></span></h3>
           <p id="set-view" class="set-view"></p>
           <p class="inspect-note">衝堂檢查：課程時段與這個集合 retainAll() 後不為空，就是衝堂。</p>
         </section>
@@ -208,7 +208,7 @@
     <footer class="statusbar">
       <span><i class="dot"></i><span id="status-text">JAVA ONLINE</span></span>
       <span>STUDENTS <b id="student-count">16</b></span>
-      <span class="statusbar-right">DATA STRUCTURES · 115-1</span>
+      <span class="statusbar-right">DATA STRUCTURES 115-1</span>
     </footer>
 
     <!-- 遞補通知（設計檔 ⑥）：玩家從候補被補上時，從右上角跳出 -->
@@ -220,7 +220,7 @@
   <div id="rules" class="rules" hidden>
     <section class="rules-card" role="dialog" aria-modal="true" aria-labelledby="rules-title">
       <div class="rules-head">
-        <p class="micro">MANUAL · ENROLLFLOW 選課規則</p>
+        <p class="micro">MANUAL: ENROLLFLOW 選課規則</p>
         <button id="btn-rules-x" class="rules-x" type="button" aria-label="關閉規則">×</button>
       </div>
       <h2 class="rules-title" id="rules-title">RULES<span class="cursor" aria-hidden="true">_</span></h2>
@@ -237,7 +237,7 @@
         <section class="rule">
           <h3 class="rule-title"><span class="num">02</span>學分</h3>
           <ul>
-            <li>每人學分要在 <b data-rule="minCredits">10</b>–<b data-rule="maxCredits">16</b> 之間。</li>
+            <li>每人學分要在 <b data-rule="minCredits">10</b> 到 <b data-rule="maxCredits">16</b> 之間。</li>
             <li>加選後超過 <b data-rule="maxCredits">16</b> 學分會被擋下。</li>
             <li class="rule-alert">第 <b data-rule="totalDays">10</b> 天結束時低於 <b data-rule="minCredits">10</b> 學分就失敗，系統會要求你申請休學。</li>
           </ul>
@@ -252,7 +252,7 @@
           </ul>
         </section>
         <section class="rule">
-          <h3 class="rule-title"><span class="num">04</span>候補 · Queue</h3>
+          <h3 class="rule-title"><span class="num">04</span>候補（Queue）</h3>
           <ul>
             <li>只有額滿的課能排候補，排在隊伍最後面。</li>
             <li>先排先補：有人退選，系統會立刻從隊伍最前面開始遞補。</li>
@@ -261,7 +261,7 @@
           </ul>
         </section>
         <section class="rule">
-          <h3 class="rule-title"><span class="num">05</span>復原 · Stack</h3>
+          <h3 class="rule-title"><span class="num">05</span>復原（Stack）</h3>
           <ul>
             <li>只能復原自己的操作，最多 10 步。</li>
             <li>退選後名額已被候補補走，復原時會改成幫你排候補。</li>
@@ -285,6 +285,6 @@
     </section>
   </div>
 
-  <script src="app.js?v=9147aac4"></script>
+  <script src="app.js?v=cf598ff8"></script>
 </body>
 </html>

@@ -840,7 +840,7 @@ function renderSide() {
       el('span', { className: 'ticket', 'aria-label': `第 ${c.myPosition} 位` },
         pad2(c.myPosition), el('small', { text: 'POS' })),
       el('span', { className: 'my-wait-name', text: `${c.code} ${c.name}` }),
-      el('span', { className: 'my-wait-meta', text: `共 ${c.waiting} 人候補 · 名額 ${c.enrolled}/${c.capacity}` }))));
+      el('span', { className: 'my-wait-meta', text: `共 ${c.waiting} 人候補，名額 ${c.enrolled}/${c.capacity}` }))));
   $('wait-empty').hidden = waits.length > 0;
 
   // 操作紀錄：Java 已經把最新的放在最前面；編號從最舊的 #01 開始算
@@ -936,7 +936,7 @@ function showToast(title, text) {
   const toast = el('div', { className: 'toast', role: 'status' },
     el('span', { className: 'toast-icon', 'aria-hidden': 'true', text: '↗' }),
     el('div', {},
-      el('p', { className: 'toast-title', text: '遞補成功 · ' + title }),
+      el('p', { className: 'toast-title', text: '遞補成功：' + title }),
       el('p', { className: 'toast-text', text })),
     el('button', { className: 'toast-close', type: 'button', 'aria-label': '關閉通知', text: '×', onClick: () => toast.remove() }));
   $('toasts').append(toast);
