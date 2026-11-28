@@ -1,10 +1,9 @@
 # EnrollFlow 選課候補模擬器
 
-在瀏覽器裡跑十天加退選，看候補佇列怎麼遞補。淡江資管「資料結構」115-1 期末作品，第 07 組。
+在瀏覽器裡跑十天加退選，看候補佇列怎麼遞補。
 
 **線上版：<https://nicktodj-boop.github.io/enrollflow/>**（首次需要載入Java 的 CheerpJ）
 
-![EnrollFlow 主畫面：課程列表、週課表、我的候補、操作紀錄與資料結構透視面板](docs/screenshot.png)
 
 ## 玩法
 
@@ -20,7 +19,7 @@
 
 ## 用到的資料結構
 
-五種結構都用 `java.util`，畫面下方的「資料結構透視面板」會即時顯示佇列、堆疊和集合的內容。
+畫面下方的「資料結構透視面板」會即時顯示佇列、堆疊和集合的內容。
 
 | 結構 | 實作 | 用在哪裡 | 主要操作 |
 |---|---|---|---|
@@ -68,39 +67,8 @@ java -cp out g9.enrollflow.Main
 
 `run.sh` 會先執行 `build.sh`，把 Java 以 Java 8 bytecode 編到 `docs/`，再用 `server.py` 開本機伺服器，瀏覽器打開 <http://localhost:8001/>。Windows 用 `build.bat` 編譯後執行 `python server.py 8001`。
 
-網址加上 `?demo`（例如 <http://localhost:8001/?demo>）會讀 `docs/demo-state.json` 的示範狀態，不載入 Java，用來看畫面。
 
-### 4. 測試
 
-`src/test/java` 有 25 項 JUnit 5 測試：
-
-- `CourseSystemTest`：加選、退選、候補、遞補、復原與各種邊界情況（額滿、衝堂、超過學分、同科目、找不到課號等）。
-- `SimulationInvariantTest`：300 局隨機操作，每一步檢查課程名單、候補佇列、學生課表與學分彼此一致。
-
-在 IDE 執行 `src/test/java`，或用 Maven 執行 `mvn test`。
-
-## 專案結構
-
-```
-enrollflow/
-├── pom.xml                 Maven 設定（Java 8、主程式 g9.enrollflow.Main）
-├── src/main/java/g9/enrollflow/
-│   ├── CourseSystem.java   對外入口：加選、退選、候補、復原、下一天，所有規則集中在這裡
-│   ├── Course.java         一門課：名額、時段、候補佇列 Queue
-│   ├── Student.java        一位學生：已選課程、已佔時段 Set、學分
-│   ├── Simulator.java      60 位模擬同學每天的行動
-│   ├── Action.java         復原堆疊裡的一筆操作
-│   ├── CourseData.java     34 門真實課程資料
-│   ├── ConsoleUI.java      終端機版介面
-│   └── Main.java           程式進入點
-├── src/test/java/          JUnit 測試
-├── docs/                   網頁版（GitHub Pages 從這裡發布，含編好的 .class）
-├── build.sh / build.bat    編譯網頁版
-├── run.sh                  編譯並啟動本機伺服器
-└── server.py               支援 Range 請求的本機伺服器（CheerpJ 需要）
-```
-
-每個類別與方法都有 Javadoc，資料結構操作的地方註明用途。
 
 
 ## 參考
