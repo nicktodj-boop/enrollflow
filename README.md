@@ -2,7 +2,7 @@
 
 在瀏覽器裡跑十天加退選，看候補佇列怎麼遞補。淡江資管「資料結構」115-1 期末作品，第 07 組。
 
-**線上試玩：<https://nicktodj-boop.github.io/enrollflow/>**（第一次載入約 15 秒，要下載在瀏覽器裡執行 Java 的 CheerpJ）
+**線上版：<https://nicktodj-boop.github.io/enrollflow/>**（首次需要載入Java 的 CheerpJ）
 
 ![EnrollFlow 主畫面：課程列表、週課表、我的候補、操作紀錄與資料結構透視面板](docs/screenshot.png)
 
@@ -102,12 +102,7 @@ enrollflow/
 
 每個類別與方法都有 Javadoc，資料結構操作的地方註明用途。
 
-## 組員
-
-第 07 組：陳彥宇、洪誼蓁、李佳勳、李哲宇
 
 ## 參考
 
-- 課程 W04 教材：[網頁執行 Java：CheerpJ v3 實作指南](https://medium.com/@sekewei/how-to-call-java-classes-in-a-web-page-by-cheerpj-f03d0adf6571)
-- [CheerpJ](https://cheerpj.com/)：在瀏覽器裡執行 Java bytecode
 - 課程資料：淡江大學資訊管理學系 115-1 大二、大三課程，名額縮成 5 到 8 人，讓候補一定會發生；模擬同學的姓名為虛構
