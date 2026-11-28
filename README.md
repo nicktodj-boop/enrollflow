@@ -2,8 +2,7 @@
 
 在瀏覽器裡跑十天加退選，看候補佇列怎麼遞補。
 
-**線上版：<https://nicktodj-boop.github.io/enrollflow/>**（首次需要載入Java 的 CheerpJ）
-
+**線上版：<https://nicktodj-boop.github.io/enrollflow/>**（首次需要載入 Java 的 CheerpJ）
 
 ## 玩法
 
@@ -66,10 +65,6 @@ java -cp out g9.enrollflow.Main
 ```
 
 `run.sh` 會先執行 `build.sh`，把 Java 以 Java 8 bytecode 編到 `docs/`，再用 `server.py` 開本機伺服器，瀏覽器打開 <http://localhost:8001/>。Windows 用 `build.bat` 編譯後執行 `python server.py 8001`。
-
-
-
-
 
 ## 參考
 
